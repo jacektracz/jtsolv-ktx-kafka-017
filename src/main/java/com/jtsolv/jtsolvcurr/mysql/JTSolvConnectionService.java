@@ -46,7 +46,9 @@ public class JTSolvConnectionService {
             url = url + "/" ;
             url = url + "jtsolv_gamedices_01";
             url = url + "?" ;
-            url = url + "useUnicode=true&characterEncoding=utf8&useSSL=false";
+            url = url + "useUnicode=true&characterEncoding=utf8";
+            url = url + "&useSSL=false";
+            url = url + "&allowPublicKeyRetrieval=true";
             user = "root";
             password = "jtsolvp";
         }
