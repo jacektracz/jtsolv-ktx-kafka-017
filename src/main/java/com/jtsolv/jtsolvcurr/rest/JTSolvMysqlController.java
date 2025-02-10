@@ -1,6 +1,7 @@
-package com.jtsolv.jtsolvcurr.kafka;
+package com.jtsolv.jtsolvcurr.rest;
 
 
+import com.jtsolv.jtsolvcurr.kafka.KafkaProducer;
 import com.jtsolv.jtsolvcurr.mysql.JTSolvConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,32 +13,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class KafkaController {
+public class JTSolvMysqlController {
 
-
-    private final KafkaProducer messageProducer;
     private final JTSolvConnectionService connectionService;
 
     @Autowired
-    public KafkaController(KafkaProducer messageProducer,
-                           JTSolvConnectionService connectionService){
-        this.messageProducer = messageProducer;
+    public JTSolvMysqlController(JTSolvConnectionService connectionService){
         this.connectionService = connectionService;
     }
 
-    @PostMapping("/kafka/send-post")
-    public String sendMessage(@RequestParam("message") String topic,
-                              @RequestParam("message") String message) {
-        messageProducer.sendMessage("jtsolv-test-topic-4", message);
-        return "Message sent: " + message;
-    }
-
-    @GetMapping("/kafka/send-get")
-    public String sendMessageGet(@RequestParam("topic") String topic,
-                                 @RequestParam("message") String message) {
-        messageProducer.sendMessage(topic, message);
-        return "Message sent: " + message;
-    }
 
     @GetMapping("/kafka/send-get-test")
     public String sendMessageTestByGet(@RequestParam("topic") String topic,
