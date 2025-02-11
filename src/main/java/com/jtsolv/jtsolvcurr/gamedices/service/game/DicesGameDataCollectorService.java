@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.gamedices.service.game;
 
 import com.jtsolv.jtsolvcurr.gamedices.repository.crud.*;
 import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
-import com.jtsolv.jtsolvcurr.gamedices.engine.model.DiceRollEngine;
+import com.jtsolv.jtsolvcurr.gamedices.engine.DiceRollEngine;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.GameItemResultCrud;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.GameStepCrud;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.GameStepDefCrud;

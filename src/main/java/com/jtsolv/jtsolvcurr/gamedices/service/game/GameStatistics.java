@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.gamedices.service.game;
 
-import com.jtsolv.jtsolvcurr.gamedices.engine.model.DiceRollResult;
+import com.jtsolv.jtsolvcurr.gamedices.engine.DiceRollResult;
 
 public class GameStatistics {
 	

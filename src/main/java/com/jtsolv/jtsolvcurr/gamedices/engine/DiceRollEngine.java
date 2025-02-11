@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.gamedices.engine.model;
+package com.jtsolv.jtsolvcurr.gamedices.engine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

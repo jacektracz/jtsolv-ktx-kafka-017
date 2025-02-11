@@ -1,8 +1,8 @@
 package com.jtsolv.jtsolvcurr.gamedices.service.game;
 
-import com.jtsolv.jtsolvcurr.gamedices.engine.model.DiceRollEngine;
-import com.jtsolv.jtsolvcurr.gamedices.engine.model.DiceRollResult;
-import com.jtsolv.jtsolvcurr.gamedices.engine.model.ResultEntry;
+import com.jtsolv.jtsolvcurr.gamedices.engine.DiceRollEngine;
+import com.jtsolv.jtsolvcurr.gamedices.engine.DiceRollResult;
+import com.jtsolv.jtsolvcurr.gamedices.engine.ResultEntry;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.*;
 import com.jtsolv.jtsolvcurr.gamedices.repository.crud.*;
 

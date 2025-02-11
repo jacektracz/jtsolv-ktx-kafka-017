@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.gamedices.controllers.game;
+package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.service.ccr.CCRClientService;
 import org.springframework.beans.factory.annotation.Autowired;

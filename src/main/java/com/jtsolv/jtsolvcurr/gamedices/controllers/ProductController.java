@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.gamedices.controllers.game;
+package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.Product;
 import com.jtsolv.jtsolvcurr.gamedices.service.admin.ProductService;

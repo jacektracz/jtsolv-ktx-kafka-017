@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.gamedices.controllers.game;
+package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.dto.GameStepDTO;
 import com.jtsolv.jtsolvcurr.gamedices.service.admin.GameStepService;

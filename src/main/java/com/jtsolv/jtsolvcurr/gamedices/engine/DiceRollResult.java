@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.gamedices.engine.model;
+package com.jtsolv.jtsolvcurr.gamedices.engine;
 
 import java.util.HashMap;
 import java.util.Map;
