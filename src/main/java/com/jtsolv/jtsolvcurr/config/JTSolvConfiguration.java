@@ -30,6 +30,7 @@ public class JTSolvConfiguration {
         return retObj;
     }
 
+    /*
     @Bean
     @Primary
     @ConditionalOnMissingBean(DataSource.class)
@@ -39,6 +40,8 @@ public class JTSolvConfiguration {
                 .setType(EmbeddedDatabaseType.H2)
                 .build();
     }
+     */
+
     private  void logInfoEx(String s1, String s2 ){
 
     }

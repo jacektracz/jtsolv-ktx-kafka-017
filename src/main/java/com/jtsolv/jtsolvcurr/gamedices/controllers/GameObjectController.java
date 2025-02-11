@@ -1,7 +1,9 @@
 package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
+import com.jtsolv.jtsolvcurr.gamedices.dto.GameLoginDTO;
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.GameObjectEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.GameObjectRepositoryEntity;
+import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,17 @@ public class GameObjectController {
 
     @GetMapping("/game-object")
     public List<GameObjectEntity> getGameObjects() {
-        return (List<GameObjectEntity>) gameObjectRepository.findAll();
+        String sm = "getGameObjects-";
+        LkdGenericLogger.logGenericInfo(sm + "-method-start");
+        try {
+            return (List<GameObjectEntity>) gameObjectRepository.findAll();
+        } catch (Exception ex) {
+            LkdGenericLogger.logGenericException(ex, sm + "method--exception");
+            throw ex;
+        }
+        //LkdGenericLogger.logGenericInfo(sm + "method-end");
+
+
     }
 
     @PostMapping("/game-object")
