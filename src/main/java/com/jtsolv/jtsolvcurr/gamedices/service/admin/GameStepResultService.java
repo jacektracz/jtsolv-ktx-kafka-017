@@ -36,6 +36,7 @@ public class GameStepResultService  {
     public GameStepResultDTO create(final GameStepResultDTO gameStepResultDTO) {
     	try {    		
 	    	final GameStepResultEntity objToSave =  GameStepResultMapperEntity.getMappedEntity(gameStepResultDTO);
+			objToSave.setId(null);
 	    	final GameStepResultEntity retObj =  this.gameStepResultRepositoryEntity.save(objToSave);
 	    	final GameStepResultDTO retObjDTO =  GameStepResultMapperEntity.getMappedDTO(retObj,true);    	
 	    	return retObjDTO;
@@ -47,6 +48,7 @@ public class GameStepResultService  {
     public GameStepResultDTO createCrud(final GameStepResultDTO gameStepResultDTO) {
     	try {    		
 	    	final GameStepResultCrud objToSave =  GameStepResultMapperCrud.getMappedEntity(gameStepResultDTO);
+			objToSave.setId(null);
 	    	final GameStepResultCrud retObj =  this.gameStepResultRepositoryCrud.save(objToSave);
 	    	final GameStepResultDTO retObjDTO =  GameStepResultMapperCrud.getMappedDTO(retObj);    	
 	    	return retObjDTO;

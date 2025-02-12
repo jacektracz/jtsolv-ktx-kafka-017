@@ -29,6 +29,7 @@ public class GameStepDefService  {
     public GameStepDefDTO create(final GameStepDefDTO gameStepDefDTO) {
     	try {    		
 	    	final GameStepDefEntity objToSave =  GameStepDefMapperEntity.getMappedEntity(gameStepDefDTO);
+			objToSave.setId(null);
 	    	final GameStepDefEntity retObj =  this.gameStepDefRepositoryEntity.save(objToSave);
 	    	final GameStepDefDTO retObjDTO =  GameStepDefMapperEntity.getMappedDTO(retObj,true);    	
 	    	return retObjDTO;
@@ -40,6 +41,7 @@ public class GameStepDefService  {
     public GameStepDefDTO createCrud(final GameStepDefDTO gameStepDefDTO) {
     	try {    		
 	    	final GameStepDefCrud objToSave =  GameStepDefMapperCrud.getMappedEntity(gameStepDefDTO);
+			objToSave.setId(null);
 	    	final GameStepDefCrud retObj =  this.gameStepDefRepositoryCrud.save(objToSave);
 	    	final GameStepDefDTO retObjDTO =  GameStepDefMapperCrud.getMappedDTO(retObj);    	
 	    	return retObjDTO;
@@ -49,8 +51,12 @@ public class GameStepDefService  {
     }
     
     public List<GameStepDefDTO> findAll() {
-        List<GameStepDefEntity> objs = gameStepDefRepositoryEntity.findAll();
-        List<GameStepDefDTO> objsDTO =  GameStepDefMapperEntity.mapCollectionToDTO(objs);
-        return objsDTO;
+		try {
+			List<GameStepDefEntity> objs = gameStepDefRepositoryEntity.findAll();
+			List<GameStepDefDTO> objsDTO =  GameStepDefMapperEntity.mapCollectionToDTO(objs);
+			return objsDTO;
+		} catch(Exception ex) {
+			throw ex;
+		}
     }
 }

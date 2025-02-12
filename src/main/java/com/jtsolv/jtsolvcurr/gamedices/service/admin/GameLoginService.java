@@ -46,7 +46,7 @@ public class GameLoginService  {
 	    	objToSave.setLastName(objToSave.getName());
 	    	objToSave.setUsername(objToSave.getName());
 	    	objToSave.setLangKey("pl");
-	    	
+			objToSave.setId(null);
 	    	final GameLoginEntity retObj =  this.gameLoginRepositoryEntity.save(objToSave);
 	    	final GameLoginDTO retObjDTO =  GameLoginMapperEntity.getMappedDTO(retObj);    	
 	    	return retObjDTO;
@@ -80,7 +80,7 @@ public class GameLoginService  {
 	    	objToSave.setLastName(objToSave.getName());
 	    	objToSave.setUsername(objToSave.getName());
 	    	objToSave.setLangKey("pl");
-	    	
+			objToSave.setId(null);
 	    	final GameLoginCrud retObj =  this.gameLoginRepositoryCrud.save(objToSave);
 	    	final GameLoginDTO retObjDTO =  GameLoginMapperCrud.getMappedDTO(retObj);
 	    	logInfoEx(sMethod, "end");    		

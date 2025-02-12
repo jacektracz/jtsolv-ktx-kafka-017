@@ -29,6 +29,7 @@ public class GameItemResultService  {
     public GameItemResultDTO create(final GameItemResultDTO gameItemResultDTO) {
     	try {    		
 	    	final GameItemResultEntity objToSave =  GameItemResultMapperEntity.getMappedEntity(gameItemResultDTO);
+			objToSave.setId(null);
 	    	final GameItemResultEntity retObj =  this.gameItemResultRepositoryEntity.save(objToSave);
 	    	final GameItemResultDTO retObjDTO =  GameItemResultMapperEntity.getMappedDTO(retObj);    	
 	    	return retObjDTO;
@@ -40,6 +41,7 @@ public class GameItemResultService  {
     public GameItemResultDTO createCrud(final GameItemResultDTO gameItemResultDTO) {
     	try {    		
 	    	final GameItemResultCrud objToSave =  GameItemResultMapperCrud.getMappedEntity(gameItemResultDTO);
+			objToSave.setId(null);
 	    	final GameItemResultCrud retObj =  this.gameItemResultRepositoryCrud.save(objToSave);
 	    	final GameItemResultDTO retObjDTO =  GameItemResultMapperCrud.getMappedDTO(retObj);    	
 	    	return retObjDTO;
