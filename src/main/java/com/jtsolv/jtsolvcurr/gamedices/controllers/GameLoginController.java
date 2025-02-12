@@ -25,24 +25,42 @@ public class GameLoginController {
         LkdGenericLogger.logGenericInfo(sm + "-method-start");
         try {
             List<GameLoginDTO> result = this.gameLoginService.findAll();
+            LkdGenericLogger.logGenericInfo(sm + "method-end");
             return result;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex, sm + "method--exception");
             throw ex;
         }
-        //LkdGenericLogger.logGenericInfo(sm + "method-end");
 
     }
 
     @PostMapping("/game-login-entity")
     public void addGameLogin(@RequestBody GameLoginDTO gameLogin) {
 
-    	this.gameLoginService.create(gameLogin);
+        String sm = "addGameLogin";
+        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        try {
+            gameLogin.setId(null);
+            this.gameLoginService.create(gameLogin);
+        } catch (Exception ex) {
+            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            throw ex;
+        }
+        LkdGenericLogger.logGenericInfo(sm + "-end-method");
     }
     
     @PostMapping("/game-login")
     public void addGameLoginCrud(@RequestBody GameLoginDTO gameLogin) {
-    	this.gameLoginService.createCrud(gameLogin);
+        String sm = "addGameLoginCrud";
+        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        try {
+            gameLogin.setId(null);
+            this.gameLoginService.createCrud(gameLogin);
+        } catch (Exception ex) {
+            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            throw ex;
+        }
+        LkdGenericLogger.logGenericInfo(sm + "-end-method");
     }
     
 }

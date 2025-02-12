@@ -22,7 +22,8 @@ public class DiceController {
     public List<DiceEntity> getDices() {
         LkdGenericLogger.logGenericInfo("getDices");
         try {
-            return (List<DiceEntity>) diceRepository.findAll();
+            List<DiceEntity> lst = diceRepository.findAll();
+            return lst;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex,"getDices");
             throw ex;
@@ -31,9 +32,11 @@ public class DiceController {
 
     @PostMapping("/dice")
     void addDice(@RequestBody DiceEntity dice) {
-        LkdGenericLogger.logGenericInfo("addDice");
+        LkdGenericLogger.logGenericInfo("addDice--start");
         try {
+            dice.setId(null);
             diceRepository.save(dice);
+            LkdGenericLogger.logGenericInfo("addDice--end");
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex,"addDice");
             throw ex;

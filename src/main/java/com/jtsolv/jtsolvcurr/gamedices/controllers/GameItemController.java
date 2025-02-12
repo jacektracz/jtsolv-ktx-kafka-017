@@ -37,6 +37,7 @@ public class GameItemController {
         String sm = "addGameItem";
         LkdGenericLogger.logGenericInfo(sm + "-start-method");
         try {
+            gameItem.setId(null);
             gameItemRepository.save(gameItem);
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");

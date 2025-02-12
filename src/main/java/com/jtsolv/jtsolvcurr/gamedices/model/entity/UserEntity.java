@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "lkdg_commerce_user")
 public class UserEntity {
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -28,13 +28,12 @@ private final GameItemResultService gameItemResultService;
         LkdGenericLogger.logGenericInfo(sm + "-start");
         try {
             final List<GameItemResultDTO> objects =  this.gameItemResultService.findAll();
+            LkdGenericLogger.logGenericInfo(sm + "addGame-end");
             return objects;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex, sm + "-exception");
             throw ex;
         }
-        //LkdGenericLogger.logGenericInfo(sm + "addGame-end");
-
     }
 
     @PostMapping("/game-item-result")
@@ -43,6 +42,7 @@ private final GameItemResultService gameItemResultService;
         String sm = "getGameItemResults-";
         LkdGenericLogger.logGenericInfo(sm + "-method-start");
         try {
+            gameItemResultDTO.setId(null);
             this.gameItemResultService.createCrud(gameItemResultDTO) ;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex, sm + "method--exception");

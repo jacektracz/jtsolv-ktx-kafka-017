@@ -25,18 +25,26 @@ public class GameObjectController {
         String sm = "getGameObjects-";
         LkdGenericLogger.logGenericInfo(sm + "-method-start");
         try {
-            return (List<GameObjectEntity>) gameObjectRepository.findAll();
+            List<GameObjectEntity> lst =  gameObjectRepository.findAll();
+            LkdGenericLogger.logGenericInfo(sm + "method-end");
+            return lst;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex, sm + "method--exception");
             throw ex;
         }
-        //LkdGenericLogger.logGenericInfo(sm + "method-end");
-
-
     }
 
     @PostMapping("/game-object")
     void addGameObject(@RequestBody GameObjectEntity gameObject) {
-    	gameObjectRepository.save(gameObject);
+        String sm = "addGameObject";
+        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        try {
+            gameObject.setId(null);
+            gameObjectRepository.save(gameObject);
+        } catch (Exception ex) {
+            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            throw ex;
+        }
+        LkdGenericLogger.logGenericInfo(sm + "-end-method");
     }
 }

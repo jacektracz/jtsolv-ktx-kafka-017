@@ -9,6 +9,11 @@ public class GameObjectPartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private final String name;
     private final String email;        
     

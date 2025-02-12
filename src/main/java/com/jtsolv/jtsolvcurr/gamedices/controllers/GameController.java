@@ -21,10 +21,11 @@ public class GameController {
 
     @GetMapping("/game")
     public List<GameEntity> getGames() {
-        LkdGenericLogger.logGenericInfo("getGames");
+        LkdGenericLogger.logGenericInfo("getGames--start");
         try {
-            Iterable<GameEntity> outList = gameRepository.findAll();
-            return (List<GameEntity>)outList;
+            List<GameEntity> outList = gameRepository.findAll();
+            LkdGenericLogger.logGenericInfo("getGames--end");
+            return outList;
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex,"getGames");
             throw ex;
@@ -35,7 +36,9 @@ public class GameController {
     void addGame(@RequestBody GameEntity game) {
         LkdGenericLogger.logGenericInfo("addGame-start");
         try {
+            game.setId(null);
             gameRepository.save(game);
+            LkdGenericLogger.logGenericInfo("addGame-end");
         } catch (Exception ex) {
             LkdGenericLogger.logGenericException(ex,"addGame-exception");
             throw ex;
