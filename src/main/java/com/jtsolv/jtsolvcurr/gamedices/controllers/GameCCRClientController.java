@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/ccr")
 @CrossOrigin
-public class CCRClientController {
+public class GameCCRClientController {
 
 
 	private final CCRClientService clientService;
 	
 	@Autowired
-	public CCRClientController(final CCRClientService ccrClientService) {
+	public GameCCRClientController(final CCRClientService ccrClientService) {
 		this.clientService = ccrClientService;
 	}
 	

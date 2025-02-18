@@ -10,11 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/game")
 @CrossOrigin
-public class DiceController {
+public class GameDiceController {
 
     private final DiceRepositoryEntity diceRepository;
 
-    public DiceController(DiceRepositoryEntity diceRepository) {
+    public GameDiceController(DiceRepositoryEntity diceRepository) {
         this.diceRepository = diceRepository;
     }
 
