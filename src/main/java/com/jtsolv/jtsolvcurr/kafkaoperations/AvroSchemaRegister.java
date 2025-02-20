@@ -5,8 +5,12 @@ import io.confluent.kafka.schemaregistry.client.CachedSchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.rest.RestService;
 import org.apache.avro.Schema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AvroSchemaRegister {
+
+    private static Logger logger = LoggerFactory.getLogger(AvroSchemaRegister.class.getName());
 
     public static void main(String[] args) {
         String schemaRegistryUrl = "http://localhost:8081"; // URL of your schema registry
@@ -35,15 +39,18 @@ public class AvroSchemaRegister {
             dbg("Schema registered successfully with ID: " + schemaId);
         } catch (Exception e) {
             dbg("Error while registering schema: " + e.getMessage());
+            err("Error while registering schema: " + e.getMessage());
         }
     }
 
     private static void dbg(String txt){
-        System.out.println(txt);
+        logger.trace(txt);
     }
-    private String getSchema1(){
 
-        String sh = "";
-        return sh;
+    private static String err (String txt){
+        logger.trace(txt);
+        logger.error(txt);
+        return txt;
     }
+
 }

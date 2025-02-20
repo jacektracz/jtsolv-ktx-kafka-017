@@ -5,16 +5,52 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.hibernate.annotations.Comment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-public class KafkaProducerExample {
-    public static void main(String[] args) {
-        produce("jtsolv-raw-topic--002","33",300);
-        produce("topic-repl-4","34",300);
+@Component
+public class JTSolvKafkaProducerService {
+
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaProducerService.class.getName());
+
+    private static String getCn() {
+        return JTSolvKafkaTopicCreatorService.class.getName();
     }
 
-    public static void produce(String topic,String keyPrefix,int numberOfMessages) {
+    public static void main(String[] args) {
+        produceMessagesInternal("jtsolv-raw-topic--002","33",300);
+        produceMessagesInternal("topic-repl-4","34",300);
+    }
+
+    public String produceMessage(
+            String topic,
+            String keyPrefix,
+            int numberOfMessages) {
+
+        String mtd = getCn() + ":produceMessage:";
+        dbg(mtd + "start");
+
+        try {
+            produceMessagesInternal(topic, keyPrefix, numberOfMessages);
+        } catch (Exception e) {
+            dbg(mtd + "Error creating topic: " + e.getMessage());
+            err(mtd + "Error creating topic: " + e.getMessage());
+            return "err";
+        }
+        return "ok";
+    }
+
+    public static void produceMessagesInternal(
+            String topic,
+            String keyPrefix,
+            int numberOfMessages) {
+        String mtd = getCn() + ":produceMessagesInternal:";
+        dbg(mtd + "start");
+
         // Set Kafka producer properties
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "192.168.55.103:9092"); // Kafka server
@@ -37,12 +73,18 @@ public class KafkaProducerExample {
 
         // Close the producer
         producer.close();
+
+        dbg(mtd + "end");
+
     }
 
     private static void sendValue(Producer<String, String> producer,
                                   String topic,
                                   String key,
                                   String value) {
+        String mtd = getCn() + ":sendValue:";
+        dbg(mtd + "start");
+
         dbg("Before send message: [key:" + key + "]");
         dbg("Before send message: [value:" + value + "]");
         producer.send(new ProducerRecord<>(topic, key, value), (metadata, exception) -> {
@@ -58,9 +100,17 @@ public class KafkaProducerExample {
                 dbg("HasTimestamp: " + metadata.hasTimestamp());
             }
         });
+        dbg(mtd + "end");
     }
 
     private static void dbg(String txt){
-        System.out. println(txt);
+        logger.trace(txt);
     }
+
+    private String err (String txt){
+        logger.trace(txt);
+        logger.error(txt);
+        return txt;
+    }
+
 }

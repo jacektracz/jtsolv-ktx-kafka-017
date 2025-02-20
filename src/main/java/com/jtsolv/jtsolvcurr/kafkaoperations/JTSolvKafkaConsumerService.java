@@ -3,17 +3,43 @@ package com.jtsolv.jtsolvcurr.kafkaoperations;
 // KafkaConsumerExample.java
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Properties;
 
-public class KafkaConsumerExample {
+public class JTSolvKafkaConsumerService {
 
-    public static void main(String[] args) {
-        consume("jtsolv-group-2","topic-repl-4","192.168.55.103:9092");
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaConsumerService.class.getName());
+
+    private static String getCn() {
+        return JTSolvKafkaTopicCreatorService.class.getName();
     }
 
-    public static void consume(String groupId, String topic, String brokerId) {
+    public static void main(String[] args) {
+        consumeMessageInternal(
+                "jtsolv-group-2",
+                "topic-repl-4",
+                "192.168.55.103:9092");
+    }
+
+
+    public void consumeMessage(
+            String groupId,
+            String topic,
+            String brokerId) {
+        String mtd = getCn() + ":consumeMessage:";
+        dbg(mtd + "start");
+
+        consumeMessageInternal(groupId,topic,brokerId);
+        dbg(mtd + "start");
+    }
+
+    public static void consumeMessageInternal(String groupId, String topic, String brokerId) {
+        String mtd = getCn() + ":consumeMessageInternal:";
+        dbg(mtd + "start");
+
         // Set Kafka consumer properties
         Properties properties = new Properties();
         properties.put("bootstrap.servers", brokerId); // Kafka server
@@ -57,6 +83,13 @@ public class KafkaConsumerExample {
     }
 
     private static void dbg(String txt){
-        System.out.println(txt);
+        logger.trace(txt);
     }
+
+    private String err (String txt){
+        logger.trace(txt);
+        logger.error(txt);
+        return txt;
+    }
+
 }
