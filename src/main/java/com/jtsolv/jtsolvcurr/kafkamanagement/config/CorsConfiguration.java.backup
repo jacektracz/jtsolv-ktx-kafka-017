@@ -48,7 +48,7 @@ import java.io.IOException;
  * To disable CORS entirely, set <b>cors.enabled=false</b>. All other configs are
  * just Strings that get used as-is to set the corresponding CORS header.
  */
-@Configuration
+//@Configuration
 @ConditionalOnProperty(value = "cors.enabled", matchIfMissing = true)
 public class CorsConfiguration {
   @Value("${cors.allowOrigins:*}")
