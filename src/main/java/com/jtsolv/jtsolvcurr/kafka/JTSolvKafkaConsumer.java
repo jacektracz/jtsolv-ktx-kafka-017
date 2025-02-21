@@ -7,17 +7,16 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class KafkaConsumer {
+public class JTSolvKafkaConsumer {
 
 
     private ReentrantLock lock = new ReentrantLock();
 
-    private ConcurrentHashMap<String, KafkaThreadData> map = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, JTSolvKafkaThreadData> map = new ConcurrentHashMap<>();
 
     private void addThreadDataToStorage(
             String threadId,
@@ -25,7 +24,7 @@ public class KafkaConsumer {
             String offset) {
         if( map.containsKey(threadId) ){
             dbg("Update message info ( start )");
-            KafkaThreadData ktd = map.get(threadId);
+            JTSolvKafkaThreadData ktd = map.get(threadId);
             dbg("Update partition data:" + partition);
             ktd.addPartition(partition);
             dbg("Ktd thread id:" + ktd.getThreadId());
@@ -37,7 +36,7 @@ public class KafkaConsumer {
             dbg("Update message info ( end )");
         }else {
             dbg("Add message info ( start )");
-            KafkaThreadData ktd = new KafkaThreadData();
+            JTSolvKafkaThreadData ktd = new JTSolvKafkaThreadData();
             ktd.setThreadId(threadId);
             ktd.addPartition(partition);
             ktd.setMessagesCount( 1 );
@@ -139,13 +138,13 @@ public class KafkaConsumer {
             .forEach(this::printEntry);
     }
 
-    private void printEntry(Map.Entry<String, KafkaThreadData> entry) {
+    private void printEntry(Map.Entry<String, JTSolvKafkaThreadData> entry) {
 
         dbg("");
         dbg("");
         dbg("-------------- THREAD (start) ------------------");
         dbg("Thread id: " + entry.getKey());
-        KafkaThreadData ktd = entry.getValue();
+        JTSolvKafkaThreadData ktd = entry.getValue();
         dbg("Messages count: " + ktd.getMessagesCount());
         dbg("Thread data id: " + ktd.getThreadId());
         dbg("Partitions count: " + ktd.getPartitions().entrySet().stream().count());
@@ -160,8 +159,8 @@ public class KafkaConsumer {
         dbg("");
     }
 
-    private void printPartition(Map.Entry<String, KafkaPartitionData> entry,String threadId) {
-        KafkaPartitionData partition = entry.getValue();
+    private void printPartition(Map.Entry<String, JTSolvKafkaPartitionData> entry, String threadId) {
+        JTSolvKafkaPartitionData partition = entry.getValue();
         dbg("[Thread:" + threadId +  "][Partition: " + partition.getPartitionId() + "]");
         partition.getOffsets()
                 .entrySet()

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class KafkaPartitionInfo {
+public class JTSolvKafkaPartitionInfo {
 
     public static void main(String[] args) {
         getInfoForTopic("jtsolv-raw-topic--002");

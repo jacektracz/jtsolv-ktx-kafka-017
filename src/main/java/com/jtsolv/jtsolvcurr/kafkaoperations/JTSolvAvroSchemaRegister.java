@@ -8,9 +8,9 @@ import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AvroSchemaRegister {
+public class JTSolvAvroSchemaRegister {
 
-    private static Logger logger = LoggerFactory.getLogger(AvroSchemaRegister.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(JTSolvAvroSchemaRegister.class.getName());
 
     public static void main(String[] args) {
         String schemaRegistryUrl = "http://localhost:8081"; // URL of your schema registry

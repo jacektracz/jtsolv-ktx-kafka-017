@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class ManualPartitionAssignmentConsumer {
+public class JTSolvManualPartitionAssignmentConsumer {
 
     public static void main(String[] args) {
         // Set Kafka consumer properties

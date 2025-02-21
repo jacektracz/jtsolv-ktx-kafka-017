@@ -5,7 +5,7 @@ import io.micrometer.common.util.StringUtils;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class KafkaPartitionData {
+public class JTSolvKafkaPartitionData {
 
     private String threadId;
     private String partitionId;

@@ -17,13 +17,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class KafkaProducerApplication {
+public class JTSolvKafkaProducerApplication {
 
     private final Producer<String, String> producer;
     final String outTopic;
 
-    public KafkaProducerApplication(final Producer<String, String> producer,
-                                    final String topic) {
+    public JTSolvKafkaProducerApplication(final Producer<String, String> producer,
+                                          final String topic) {
         this.producer = producer;
         outTopic = topic;
     }
@@ -79,10 +79,10 @@ public class KafkaProducerApplication {
                             "the path to the file with records to send");
         }
 
-        final Properties props = KafkaProducerApplication.loadProperties(args[0]);
+        final Properties props = JTSolvKafkaProducerApplication.loadProperties(args[0]);
         final String topic = props.getProperty("output.topic.name");
         final Producer<String, String> producer = new KafkaProducer<>(props);
-        final KafkaProducerApplication producerApp = new KafkaProducerApplication(producer, topic);
+        final JTSolvKafkaProducerApplication producerApp = new JTSolvKafkaProducerApplication(producer, topic);
 
         String filePath = args[1];
         try {

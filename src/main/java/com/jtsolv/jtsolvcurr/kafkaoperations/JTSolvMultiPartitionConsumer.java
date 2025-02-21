@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class MultiPartitionConsumer {
+public class JTSolvMultiPartitionConsumer {
 
     public static void main(String[] args) {
         // Kafka consumer configuration

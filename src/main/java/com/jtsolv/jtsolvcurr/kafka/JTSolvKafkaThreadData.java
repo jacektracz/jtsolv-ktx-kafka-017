@@ -7,10 +7,10 @@ import org.springframework.util.StringUtils;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class KafkaThreadData {
+public class JTSolvKafkaThreadData {
 
     private String threadId;
-    private Map<String, KafkaPartitionData> partitions = new TreeMap();
+    private Map<String, JTSolvKafkaPartitionData> partitions = new TreeMap();
     private int messagesCount = 0;
     private Map<String, String> offsets = new TreeMap();
 
@@ -40,11 +40,11 @@ public class KafkaThreadData {
     }
 
 
-    public Map<String, KafkaPartitionData> getPartitions() {
+    public Map<String, JTSolvKafkaPartitionData> getPartitions() {
         return partitions;
     }
 
-    public void setPartitions(Map<String, KafkaPartitionData> partitions) {
+    public void setPartitions(Map<String, JTSolvKafkaPartitionData> partitions) {
         this.partitions = partitions;
     }
 
@@ -52,7 +52,7 @@ public class KafkaThreadData {
         if(StringUtils.isEmpty(partition)){
             return;
         }
-        KafkaPartitionData kpd = new KafkaPartitionData();
+        JTSolvKafkaPartitionData kpd = new JTSolvKafkaPartitionData();
         kpd.setPartitionId(partition);
         partitions.putIfAbsent(partition, kpd);
     }
@@ -63,7 +63,7 @@ public class KafkaThreadData {
         }
         offsets.putIfAbsent(offset, offset);
         if( partitions.containsKey(partition)){
-            KafkaPartitionData kpd = partitions.get(partition);
+            JTSolvKafkaPartitionData kpd = partitions.get(partition);
             kpd.addOffset(offset);
         }
 
