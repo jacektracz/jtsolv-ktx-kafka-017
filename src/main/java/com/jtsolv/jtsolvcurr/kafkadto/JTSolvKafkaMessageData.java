@@ -6,9 +6,13 @@ public class JTSolvKafkaMessageData {
     private String kafkaMessagePartitionId;
     private String kafkaMessageValue;
     private String kafkaMessageKey;
+
+
+    private String kafkaMessageTopic;
     private String kafkaMessageOffsetId;
     private String kafkaMessageGroupId;
     private String kafkaMessageMemberId;
+    private String kafkaMessageTimestamp;
 
     public String getKafkaMessageResults() {
         return kafkaMessageResults;
@@ -97,5 +101,19 @@ public class JTSolvKafkaMessageData {
         this.kafkaMessageValue = kafkaMessageValue;
     }
 
+    public String getKafkaMessageTopic() {
+        return kafkaMessageTopic;
+    }
+
+    public void setKafkaMessageTopic(String kafkaMessageTopic) {
+        this.kafkaMessageTopic = kafkaMessageTopic;
+    }
+    public String getKafkaMessageTimestamp() {
+        return kafkaMessageTimestamp;
+    }
+
+    public void setKafkaMessageTimestamp(String kafkaMessageTimestamp) {
+        this.kafkaMessageTimestamp = kafkaMessageTimestamp;
+    }
 
 }

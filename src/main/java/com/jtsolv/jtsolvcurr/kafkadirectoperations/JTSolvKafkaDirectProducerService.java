@@ -1,6 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaProducerExample.java
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -34,7 +35,9 @@ public class JTSolvKafkaDirectProducerService {
         String mtd = getCn() + ":produceMessage:";
         dbg(mtd + "start");
         try {
-            produceMessagesInternal(dt);
+            JTSolvKafkaResultData resultOk = produceMessagesInternal(dt);
+            resultOk.setResultCode("200");
+            return resultOk;
         } catch (Exception e) {
             dbg(mtd + "Error creating topic: " + e.getMessage());
             err(mtd + "Error creating topic: " + e.getMessage());
@@ -44,16 +47,15 @@ public class JTSolvKafkaDirectProducerService {
             return resultErr;
 
         }
-        JTSolvKafkaResultData resultOk = new JTSolvKafkaResultData();
-        resultOk.setResultCode("200");
-        return resultOk;
+
     }
 
-    public static void produceMessagesInternal(
+    public static JTSolvKafkaResultData produceMessagesInternal(
             JTSolvKafkaRequestData dt
             ) {
         String mtd = getCn() + ":produceMessagesInternal:";
         dbg(mtd + "start");
+        JTSolvKafkaResultData result = new JTSolvKafkaResultData();
         String topic = dt.getTopic();
         String keyPrefix = dt.getKeyPrefix();
         long numberOfSend = Long.valueOf(dt.getNumbers());
@@ -70,43 +72,57 @@ public class JTSolvKafkaDirectProducerService {
         for (int ii =0 ; ii< numberOfSend; ii++ ) {
             String key = initialKey + ii;
             String value = initialValue + ii + "--" + key;
-            sendValue(producer, topic, key, value);
+            sendValue(result, producer, topic, key, value);
         }
         // Send a record (message)
 
         // Close the producer
         producer.close();
         dbg(mtd + "end");
-
+        return result;
     }
 
-    private static void sendValue(Producer<String, String> producer,
-                                  String topic,
-                                  String key,
-                                  String value) {
+    private static void sendValue(
+            JTSolvKafkaResultData result,
+            Producer<String, String> producer,
+            String topic,
+            String key,
+            String value) {
         String mtd = getCn() + ":sendValue:";
         dbg(mtd + "start");
 
-        dbg("Before send message: [key:" + key + "]");
-        dbg("Before send message: [value:" + value + "]");
+        dbg(mtd + "Before send message: [key:" + key + "]");
+        dbg(mtd + "Before send message: [value:" + value + "]");
         producer.send(new ProducerRecord<>(topic, key, value), (metadata, exception) -> {
             if (exception != null) {
-                dbg("Error while producing message: " + exception.getMessage());
+                JTSolvKafkaMessageData errValue = new JTSolvKafkaMessageData();
+                errValue.setKafkaMessageErrorMessage(
+                        dbg(mtd + "Error while producing message: "
+                                + exception.getMessage()));
+                result.getResultMessages().add(errValue);
             } else {
-                dbg("Message sent successfully.");
-                dbg("Partition: " + metadata.partition());
-                dbg("Topic: " + metadata.topic());
-                dbg("Offset: " + metadata.offset());
-                dbg("Timestamp: " + metadata.timestamp());
-                dbg("Message: " + value);
-                dbg("HasTimestamp: " + metadata.hasTimestamp());
+                JTSolvKafkaMessageData successValue = new JTSolvKafkaMessageData();
+                dbg(mtd + "Message sent successfully.");
+                dbg(mtd + "Partition: " + metadata.partition());
+                successValue.setKafkaMessagePartitionId(String.valueOf(metadata.partition()));
+                dbg(mtd + "Topic: " + metadata.topic());
+                successValue.setKafkaMessageTopic(String.valueOf(metadata.topic()));
+                dbg(mtd + "Offset: " + metadata.offset());
+                successValue.setKafkaMessageOffsetId(String.valueOf(metadata.offset()));
+                dbg(mtd + "Timestamp: " + metadata.timestamp());
+                successValue.setKafkaMessageTimestamp(String.valueOf(metadata.timestamp()));
+                dbg(mtd + "Message: " + value);
+                successValue.setKafkaMessageValue(String.valueOf(value));
+                dbg(mtd + "HasTimestamp: " + metadata.hasTimestamp());
+                result.getResultMessages().add(successValue);
             }
         });
         dbg(mtd + "end");
     }
 
-    private static void dbg(String txt){
+    private static String dbg(String txt){
         logger.trace(txt);
+        return txt;
     }
 
     private String err (String txt){
