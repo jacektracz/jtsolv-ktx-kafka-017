@@ -34,7 +34,6 @@ public class JTSolvKafkaDirectConsumerService {
          */
     }
 
-
     public JTSolvKafkaResultData consumeMessage(
             JTSolvKafkaRequestData dt) {
         String mtd = getCn() + ":consumeMessage:";

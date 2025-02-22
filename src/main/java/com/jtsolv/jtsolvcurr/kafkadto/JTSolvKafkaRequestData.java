@@ -6,12 +6,14 @@ public class JTSolvKafkaRequestData {
 
     private String groupId;
     private String topic;
+    private String messageValue;
     private String brokerId;
     private String numbers;
     private String startoffset;
     private String endoffset;
     private String threadSleepPooling = "1000";
     private String threadKafkaPoolingTime = "1000";
+    private String keyPrefix= "";
 
     public String getThreadKafkaPoolingTime() {
         return threadKafkaPoolingTime;
@@ -80,5 +82,20 @@ public class JTSolvKafkaRequestData {
         this.endoffset = endoffset;
     }
 
+    public String getMessageValue() {
+        return messageValue;
+    }
+
+    public void setMessageValue(String messageValue) {
+        this.messageValue = messageValue;
+    }
+
+    public String getKeyPrefix() {
+        return keyPrefix;
+    }
+
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
+    }
 
 }

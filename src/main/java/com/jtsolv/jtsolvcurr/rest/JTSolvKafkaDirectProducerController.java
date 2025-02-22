@@ -16,9 +16,10 @@ public class JTSolvKafkaDirectProducerController {
     private JTSolvKafkaDirectProducerService messageProducer;
 
     @PostMapping("/kafka/send-direct-post")
-    public JTSolvKafkaResultData sendMessage(@RequestParam("message") String topic,
-                              @RequestParam("message") String message,
-                                @RequestParam("numbers") String numbers) {
+    public JTSolvKafkaResultData sendMessage(
+            @RequestParam("message") String topic,
+            @RequestParam("message") String message,
+            @RequestParam("numbers") String numbers) {
         try{
             JTSolvKafkaResultData result = messageProducer.produceMessage(
                     topic,
