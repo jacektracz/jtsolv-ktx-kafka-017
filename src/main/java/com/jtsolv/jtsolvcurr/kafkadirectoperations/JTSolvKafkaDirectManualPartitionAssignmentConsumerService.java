@@ -3,10 +3,12 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Properties;
 
+@Component
 public class JTSolvKafkaDirectManualPartitionAssignmentConsumerService {
 
     public static void main(String[] args) {

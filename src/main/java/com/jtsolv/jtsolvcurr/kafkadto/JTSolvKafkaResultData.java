@@ -1,0 +1,36 @@
+package com.jtsolv.jtsolvcurr.kafkadto;
+
+import io.micrometer.common.util.StringUtils;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+public class JTSolvKafkaResultData {
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultSuccessMessage() {
+        return resultSuccessMessage;
+    }
+
+    public void setResultSuccessMessage(String resultSuccessMessage) {
+        this.resultSuccessMessage = resultSuccessMessage;
+    }
+
+    public String getResultErrorMessage() {
+        return resultErrorMessage;
+    }
+
+    public void setResultErrorMessage(String resultErrorMessage) {
+        this.resultErrorMessage = resultErrorMessage;
+    }
+
+    private String resultCode;
+    private String resultSuccessMessage;
+    private String resultErrorMessage;
+}

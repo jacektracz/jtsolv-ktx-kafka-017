@@ -5,11 +5,13 @@ import org.apache.kafka.clients.admin.DescribeTopicsResult;
 import org.apache.kafka.clients.admin.TopicDescription;
 import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@Component
 public class JTSolvKafkaDirectPartitionInfoService {
 
     public static void main(String[] args) {

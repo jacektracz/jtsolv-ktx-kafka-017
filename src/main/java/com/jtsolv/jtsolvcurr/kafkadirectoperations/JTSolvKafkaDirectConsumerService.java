@@ -5,10 +5,12 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Properties;
 
+@Component
 public class JTSolvKafkaDirectConsumerService {
 
     private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectConsumerService.class.getName());
@@ -21,22 +23,37 @@ public class JTSolvKafkaDirectConsumerService {
         consumeMessageInternal(
                 "jtsolv-group-2",
                 "topic-repl-4",
-                "192.168.55.103:9092");
+                "192.168.55.103:9092",0,0,0);
     }
 
 
     public void consumeMessage(
             String groupId,
             String topic,
-            String brokerId) {
+            String brokerId,
+            long numberOfMessages,
+            long startoffest,
+            long endOffset) {
         String mtd = getCn() + ":consumeMessage:";
         dbg(mtd + "start");
 
-        consumeMessageInternal(groupId,topic,brokerId);
+        consumeMessageInternal(
+                groupId,
+                topic,
+                brokerId,
+                numberOfMessages,
+                startoffest,
+                endOffset);
         dbg(mtd + "start");
     }
 
-    public static void consumeMessageInternal(String groupId, String topic, String brokerId) {
+    public static void consumeMessageInternal(
+            String groupId,
+            String topic,
+            String brokerId ,
+            long numberOfMessages,
+            long startoffest,
+            long endOffset) {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
 

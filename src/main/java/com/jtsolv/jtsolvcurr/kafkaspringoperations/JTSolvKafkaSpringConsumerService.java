@@ -1,4 +1,6 @@
 package com.jtsolv.jtsolvcurr.kafkaspringoperations;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaPartitionData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaSpringThreadData;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import org.springframework.kafka.annotation.KafkaListener;
@@ -161,13 +163,13 @@ public class JTSolvKafkaSpringConsumerService {
 
     private void printPartition(Map.Entry<String, JTSolvKafkaPartitionData> entry, String threadId) {
         JTSolvKafkaPartitionData partition = entry.getValue();
-        dbg("[Thread:" + threadId +  "][Partition: " + partition.getPartitionId() + "]");
+        dbg("[Thread:" + threadId +  "][Partition: " + partition.getKafkaPartitionPartitionId() + "]");
         partition.getOffsets()
                 .entrySet()
                 .stream()
                 .forEach(t -> printOffset(t,
                         threadId,
-                        partition.getPartitionId()));
+                        partition.getKafkaPartitionPartitionId()));
 
     }
 

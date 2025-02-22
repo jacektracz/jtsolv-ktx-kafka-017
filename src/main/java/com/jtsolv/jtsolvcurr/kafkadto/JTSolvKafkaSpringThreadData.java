@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaspringoperations;
+package com.jtsolv.jtsolvcurr.kafkadto;
 
 
 
@@ -53,7 +53,7 @@ public class JTSolvKafkaSpringThreadData {
             return;
         }
         JTSolvKafkaPartitionData kpd = new JTSolvKafkaPartitionData();
-        kpd.setPartitionId(partition);
+        kpd.setKafkaPartitionPartitionId(partition);
         partitions.putIfAbsent(partition, kpd);
     }
 

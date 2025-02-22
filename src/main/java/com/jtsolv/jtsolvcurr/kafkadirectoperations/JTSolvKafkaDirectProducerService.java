@@ -1,6 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaProducerExample.java
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -25,7 +26,7 @@ public class JTSolvKafkaDirectProducerService {
         produceMessagesInternal("topic-repl-4","34",300);
     }
 
-    public String produceMessage(
+    public JTSolvKafkaResultData produceMessage(
             String topic,
             String keyPrefix,
             int numberOfMessages) {
@@ -38,9 +39,15 @@ public class JTSolvKafkaDirectProducerService {
         } catch (Exception e) {
             dbg(mtd + "Error creating topic: " + e.getMessage());
             err(mtd + "Error creating topic: " + e.getMessage());
-            return "err";
+            JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
+            resultErr.setResultCode("500");
+            resultErr.setResultErrorMessage(e.getMessage());
+            return resultErr;
+
         }
-        return "ok";
+        JTSolvKafkaResultData resultOk = new JTSolvKafkaResultData();
+        resultOk.setResultCode("200");
+        return resultOk;
     }
 
     public static void produceMessagesInternal(
@@ -72,7 +79,6 @@ public class JTSolvKafkaDirectProducerService {
 
         // Close the producer
         producer.close();
-
         dbg(mtd + "end");
 
     }

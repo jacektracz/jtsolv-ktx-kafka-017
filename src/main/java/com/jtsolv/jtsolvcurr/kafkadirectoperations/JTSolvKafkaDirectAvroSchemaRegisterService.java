@@ -7,7 +7,9 @@ import io.confluent.kafka.schemaregistry.client.rest.RestService;
 import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JTSolvKafkaDirectAvroSchemaRegisterService {
 
     private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectAvroSchemaRegisterService.class.getName());
