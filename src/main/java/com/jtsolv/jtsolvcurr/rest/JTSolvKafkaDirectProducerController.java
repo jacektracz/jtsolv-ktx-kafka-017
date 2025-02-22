@@ -18,11 +18,13 @@ public class JTSolvKafkaDirectProducerController {
 
     @PostMapping("/kafka/send-direct-post")
     public JTSolvKafkaResultData sendMessage(
+            @RequestParam("server") String server,
             @RequestParam("message") String topic,
             @RequestParam("message") String message,
             @RequestParam("numbers") String numbers) {
         try{
             JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
+            dt.setKafkaServer(server);
             dt.setTopic(topic);
             dt.setMessageValue(message);
             dt.setNumbers(numbers);
@@ -39,12 +41,14 @@ public class JTSolvKafkaDirectProducerController {
 
     @GetMapping("/kafka/send-direct-get")
     public JTSolvKafkaResultData sendMessageGet(
+            @RequestParam("server") String server,
             @RequestParam("message") String topic,
             @RequestParam("message") String message,
             @RequestParam("numbers") String numbers) {
 
         try{
             JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
+            dt.setKafkaServer(server);
             dt.setTopic(topic);
             dt.setMessageValue(message);
             dt.setNumbers(numbers);
