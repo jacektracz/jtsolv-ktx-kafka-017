@@ -1,6 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaConsumerExample.java
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -22,6 +23,7 @@ public class JTSolvKafkaDirectConsumerService {
     }
 
     public static void main(String[] args) {
+        /*
         consumeMessageInternal(
                 "jtsolv-group-2",
                 "topic-repl-4",
@@ -29,6 +31,7 @@ public class JTSolvKafkaDirectConsumerService {
                 "0",
                 "0",
                 "0");
+         */
     }
 
 
@@ -36,29 +39,23 @@ public class JTSolvKafkaDirectConsumerService {
             JTSolvKafkaRequestData dt) {
         String mtd = getCn() + ":consumeMessage:";
         dbg(mtd + "start");
-
-        JTSolvKafkaResultData resultDt = consumeMessageInternal(
-                dt.getGroupId(),
-                dt.getTopic(),
-                dt.getBrokerId(),
-                dt.getNumbers(),
-                dt.getStartoffset(),
-                dt.getEndoffset());
-
+        JTSolvKafkaResultData resultDt = consumeMessageInternal(dt);
         dbg(mtd + "start");
-
         return resultDt;
+
     }
 
     public static JTSolvKafkaResultData consumeMessageInternal(
-            String groupId,
-            String topic,
-            String brokerId ,
-            String numberOfMessages,
-            String startoffest,
-            String endOffset) {
+            JTSolvKafkaRequestData dt) {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
+
+        String groupId = dt.getGroupId();
+        String topic = dt.getTopic();
+        String brokerId = dt.getBrokerId();
+        String numberOfMessages = dt.getNumbers();
+        String startoffest = dt.getStartoffset();
+        String endOffset = dt.getEndoffset();
         JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
         // Set Kafka consumer properties
         Properties properties = new Properties();
@@ -78,30 +75,41 @@ public class JTSolvKafkaDirectConsumerService {
         // Poll messages from the topic
         int ii = 0;
         while (true) {
-            long milliseconds = 1000;
-            dbg(mtd +"Consume in loop number:" + ii);
-            dbg(mtd +"Consumer pool start wait for milisecons:" + ii);
+            long milliseconds = Long.valueOf(dt.getThreadKafkaPoolingTime());
+            dbg(mtd + "Consume in loop number:" + ii);
+            dbg(mtd + "Consumer pool start wait for milisecons:" + ii);
             consumer.poll(milliseconds).forEach(record -> {
+                JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
                 dbg(mtd + "Consumed message: " + record.value() );
+                messageDt.setKafkaMessageValue(record.value());
                 dbg(mtd + "Consumed from partition: " + record.partition());
+                messageDt.setKafkaMessagePartitionId(String.valueOf(record.partition()));
                 dbg(mtd + "Consumed offset: " + record.offset());
+                messageDt.setKafkaMessageOffsetId(String.valueOf(record.offset()));
                 dbg(mtd + "Consumed key: " + record.key());
+                messageDt.setKafkaMessageKey(String.valueOf(record.key()));
                 dbg(mtd + "Consumed groupId: " + consumer.groupMetadata().groupId());
+                messageDt.setKafkaMessageGroupId(String.valueOf(consumer.groupMetadata().groupId()));
                 dbg(mtd + "Consumed memberId: " + consumer.groupMetadata().memberId());
+                messageDt.setKafkaMessageMemberId(String.valueOf(consumer.groupMetadata().memberId()));
                 dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
+                messageDt.setKafkaMessageMemberId(String.valueOf(consumer.groupMetadata().generationId()));
+                resultData.getResultMessages().add(messageDt);
             });
             ii++;
-            dbg(mtd +"Sleep start:");
+            dbg(mtd + "Sleep start:");
             if (ii > Long.valueOf(numberOfMessages)){
                 break;
             }
             try {
-                Thread.sleep(10000);
+                Thread.sleep(Long.valueOf(dt.getThreadSleepPooling()));
             } catch (Exception e) {
-                err("error", e);
+                JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
+                messageDt.setKafkaMessageErrorMessage(err("error", e));
+                messageDt.setKafkaMessageResults("500");
+                resultData.getResultMessages().add(messageDt);
             }
-            dbg(mtd +"Sleep end:");
-
+            dbg(mtd + "Sleep end:");
         }
         return resultData;
     }

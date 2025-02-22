@@ -5,6 +5,64 @@ public class JTSolvKafkaMessageData {
     private String kafkaMessageThreadId;
     private String kafkaMessagePartitionId;
     private String kafkaMessageValue;
+    private String kafkaMessageKey;
+    private String kafkaMessageOffsetId;
+    private String kafkaMessageGroupId;
+    private String kafkaMessageMemberId;
+
+    public String getKafkaMessageResults() {
+        return kafkaMessageResults;
+    }
+
+    public void setKafkaMessageResults(String kafkaMessageResults) {
+        this.kafkaMessageResults = kafkaMessageResults;
+    }
+
+    public String getKafkaMessageErrorMessage() {
+        return kafkaMessageErrorMessage;
+    }
+
+    public void setKafkaMessageErrorMessage(String kafkaMessageErrorMessage) {
+        this.kafkaMessageErrorMessage = kafkaMessageErrorMessage;
+    }
+
+    private String kafkaMessageResults;
+    private String kafkaMessageErrorMessage;
+
+    public String getKafkaMessageGenerationId() {
+        return kafkaMessageGenerationId;
+    }
+
+    public void setKafkaMessageGenerationId(String kafkaMessageGenerationId) {
+        this.kafkaMessageGenerationId = kafkaMessageGenerationId;
+    }
+
+    private String kafkaMessageGenerationId;
+
+    public String getKafkaMessageMemberId() {
+        return kafkaMessageMemberId;
+    }
+
+    public void setKafkaMessageMemberId(String kafkaMessageMemberId) {
+        this.kafkaMessageMemberId = kafkaMessageMemberId;
+    }
+
+    public String getKafkaMessageGroupId() {
+        return kafkaMessageGroupId;
+    }
+
+    public void setKafkaMessageGroupId(String kafkaMessageGroupId) {
+        this.kafkaMessageGroupId = kafkaMessageGroupId;
+    }
+
+    public String getKafkaMessageKey() {
+        return kafkaMessageKey;
+    }
+
+    public void setKafkaMessageKey(String kafkaMessageKey) {
+        this.kafkaMessageKey = kafkaMessageKey;
+    }
+
 
     public String getKafkaMessageOffsetId() {
         return kafkaMessageOffsetId;
@@ -14,7 +72,7 @@ public class JTSolvKafkaMessageData {
         this.kafkaMessageOffsetId = kafkaMessageOffsetId;
     }
 
-    private String kafkaMessageOffsetId;
+
     public String getKafkaMessageThreadId() {
         return kafkaMessageThreadId;
     }

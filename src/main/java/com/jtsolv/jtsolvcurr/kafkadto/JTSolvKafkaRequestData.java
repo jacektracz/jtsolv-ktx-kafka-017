@@ -10,6 +10,27 @@ public class JTSolvKafkaRequestData {
     private String numbers;
     private String startoffset;
     private String endoffset;
+    private String threadSleepPooling = "1000";
+    private String threadKafkaPoolingTime = "1000";
+
+    public String getThreadKafkaPoolingTime() {
+        return threadKafkaPoolingTime;
+    }
+
+    public void setThreadKafkaPoolingTime(String threadKafkaPoolingTime) {
+        this.threadKafkaPoolingTime = threadKafkaPoolingTime;
+    }
+
+
+
+    public String getThreadSleepPooling() {
+        return threadSleepPooling;
+    }
+
+    public void setThreadSleepPooling(String threadSleepPooling) {
+        this.threadSleepPooling = threadSleepPooling;
+    }
+
 
     public String getGroupId() {
         return groupId;
