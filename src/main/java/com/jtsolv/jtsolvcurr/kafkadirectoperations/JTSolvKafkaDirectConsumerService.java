@@ -1,6 +1,8 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaConsumerExample.java
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -27,36 +29,32 @@ public class JTSolvKafkaDirectConsumerService {
     }
 
 
-    public void consumeMessage(
-            String groupId,
-            String topic,
-            String brokerId,
-            long numberOfMessages,
-            long startoffest,
-            long endOffset) {
+    public JTSolvKafkaResultData consumeMessage(
+            JTSolvKafkaRequestData dt) {
         String mtd = getCn() + ":consumeMessage:";
         dbg(mtd + "start");
 
-        consumeMessageInternal(
-                groupId,
-                topic,
-                brokerId,
-                numberOfMessages,
-                startoffest,
-                endOffset);
+        JTSolvKafkaResultData resultDt = consumeMessageInternal(
+                dt.getGroupId(),
+                dt.getTopic(),
+                dt.getBrokerId(),
+                dt.getNumbers(),
+                dt.getStartoffset(),
+                dt.getEndoffset());
         dbg(mtd + "start");
+        return resultDt;
     }
 
-    public static void consumeMessageInternal(
+    public static JTSolvKafkaResultData consumeMessageInternal(
             String groupId,
             String topic,
             String brokerId ,
-            long numberOfMessages,
-            long startoffest,
-            long endOffset) {
+            String numberOfMessages,
+            String startoffest,
+            String endOffset) {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
-
+        JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
         // Set Kafka consumer properties
         Properties properties = new Properties();
         properties.put("bootstrap.servers", brokerId); // Kafka server
@@ -89,6 +87,9 @@ public class JTSolvKafkaDirectConsumerService {
             });
             ii++;
             dbg("Sleep start:");
+            if (ii > Long.valueOf(numberOfMessages)){
+                break;
+            }
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -97,6 +98,7 @@ public class JTSolvKafkaDirectConsumerService {
             dbg("Sleep end:");
 
         }
+        return resultData;
     }
 
     private static void dbg(String txt){

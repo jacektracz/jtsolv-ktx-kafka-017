@@ -3,6 +3,7 @@ package com.jtsolv.jtsolvcurr.rest;
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectConsumerService;
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectProducerService;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +30,14 @@ public class JTSolvKafkaDirectConsumerController {
             @RequestParam("startoffset") String startoffset,
             @RequestParam("endoffset") String endoffset) {
         try{
-            JTSolvKafkaResultData result = messageConsumer.consumeMessage(
-                    groupId,
-                    topic,
-                    brokerId,
-                    Integer.valueOf( numbers),
-                    Integer.valueOf( startoffset),
-                    Integer.valueOf( endoffset));
+            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            dt.setGroupId(groupId);
+            dt.setTopic(topic);
+            dt.setBrokerId(brokerId);
+            dt.setNumbers(numbers);
+            dt.setStartoffset(startoffset);
+            dt.setEndoffset(endoffset);
+            JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
             return result;
         } catch (Exception e) {
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
