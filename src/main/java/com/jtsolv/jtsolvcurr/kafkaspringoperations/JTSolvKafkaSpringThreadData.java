@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafka;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations;
 
 
 
@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class JTSolvKafkaThreadData {
+public class JTSolvKafkaSpringThreadData {
 
     private String threadId;
     private Map<String, JTSolvKafkaPartitionData> partitions = new TreeMap();

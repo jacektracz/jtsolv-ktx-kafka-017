@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaConsumerExample.java
 import org.apache.kafka.clients.consumer.KafkaConsumer;

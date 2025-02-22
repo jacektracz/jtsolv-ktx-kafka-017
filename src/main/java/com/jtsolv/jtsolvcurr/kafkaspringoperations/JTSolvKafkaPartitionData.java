@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafka;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations;
 
 import io.micrometer.common.util.StringUtils;
 

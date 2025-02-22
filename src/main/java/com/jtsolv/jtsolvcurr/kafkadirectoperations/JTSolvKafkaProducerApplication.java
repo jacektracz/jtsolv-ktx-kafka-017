@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 
 import org.apache.kafka.clients.producer.KafkaProducer;

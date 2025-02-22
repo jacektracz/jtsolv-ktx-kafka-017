@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafka;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,12 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class JTSolvKafkaConsumer {
+public class JTSolvKafkaSpringConsumerService {
 
 
     private ReentrantLock lock = new ReentrantLock();
 
-    private ConcurrentHashMap<String, JTSolvKafkaThreadData> map = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, JTSolvKafkaSpringThreadData> map = new ConcurrentHashMap<>();
 
     private void addThreadDataToStorage(
             String threadId,
@@ -24,7 +24,7 @@ public class JTSolvKafkaConsumer {
             String offset) {
         if( map.containsKey(threadId) ){
             dbg("Update message info ( start )");
-            JTSolvKafkaThreadData ktd = map.get(threadId);
+            JTSolvKafkaSpringThreadData ktd = map.get(threadId);
             dbg("Update partition data:" + partition);
             ktd.addPartition(partition);
             dbg("Ktd thread id:" + ktd.getThreadId());
@@ -36,7 +36,7 @@ public class JTSolvKafkaConsumer {
             dbg("Update message info ( end )");
         }else {
             dbg("Add message info ( start )");
-            JTSolvKafkaThreadData ktd = new JTSolvKafkaThreadData();
+            JTSolvKafkaSpringThreadData ktd = new JTSolvKafkaSpringThreadData();
             ktd.setThreadId(threadId);
             ktd.addPartition(partition);
             ktd.setMessagesCount( 1 );
@@ -138,13 +138,13 @@ public class JTSolvKafkaConsumer {
             .forEach(this::printEntry);
     }
 
-    private void printEntry(Map.Entry<String, JTSolvKafkaThreadData> entry) {
+    private void printEntry(Map.Entry<String, JTSolvKafkaSpringThreadData> entry) {
 
         dbg("");
         dbg("");
         dbg("-------------- THREAD (start) ------------------");
         dbg("Thread id: " + entry.getKey());
-        JTSolvKafkaThreadData ktd = entry.getValue();
+        JTSolvKafkaSpringThreadData ktd = entry.getValue();
         dbg("Messages count: " + ktd.getMessagesCount());
         dbg("Thread data id: " + ktd.getThreadId());
         dbg("Partitions count: " + ktd.getPartitions().entrySet().stream().count());

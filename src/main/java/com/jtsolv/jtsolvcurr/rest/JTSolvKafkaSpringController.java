@@ -1,7 +1,7 @@
 package com.jtsolv.jtsolvcurr.rest;
 
 
-import com.jtsolv.jtsolvcurr.kafka.JTSolvKafkaProducer;
+import com.jtsolv.jtsolvcurr.kafkaspringoperations.JTSolvKafkaSpringProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class JTSolvKafkaController {
+public class JTSolvKafkaSpringController {
 
     @Autowired
-    private JTSolvKafkaProducer messageProducer;
+    private JTSolvKafkaSpringProducerService messageProducer;
 
     @PostMapping("/kafka/send-post")
     public String sendMessage(@RequestParam("message") String topic,

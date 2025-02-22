@@ -1,11 +1,11 @@
-package com.jtsolv.jtsolvcurr.kafka;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JTSolvKafkaProducer {
+public class JTSolvKafkaSpringProducerService {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;

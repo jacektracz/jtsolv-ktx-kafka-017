@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 import io.confluent.kafka.schemaregistry.avro.AvroSchema;
 import io.confluent.kafka.schemaregistry.client.CachedSchemaRegistryClient;

@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.admin.AdminClient;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
 @Component
 public class JTSolvKafkaTopicCreatorService {
