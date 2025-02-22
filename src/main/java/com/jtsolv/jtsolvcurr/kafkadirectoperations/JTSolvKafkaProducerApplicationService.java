@@ -19,18 +19,16 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Component
-public class JTSolvKafkaProducerApplication {
+public class JTSolvKafkaProducerApplicationService {
 
-    private final Producer<String, String> producer;
-    final String outTopic;
 
-    public JTSolvKafkaProducerApplication(final Producer<String, String> producer,
-                                          final String topic) {
-        this.producer = producer;
-        outTopic = topic;
+    public JTSolvKafkaProducerApplicationService() {
     }
 
-    public Future<RecordMetadata> produce(final String message) {
+    public Future<RecordMetadata> produce(
+            final Producer<String, String> producer,
+            final String message,
+            String outTopic) {
         final String[] parts = message.split("-");
         final String key, value;
         if (parts.length > 1) {
@@ -45,9 +43,7 @@ public class JTSolvKafkaProducerApplication {
         return producer.send(producerRecord);
     }
 
-    public void shutdown() {
-        producer.close();
-    }
+
 
     public static Properties loadProperties(String fileName) throws IOException {
         final Properties envProps = new Properties();
@@ -81,17 +77,17 @@ public class JTSolvKafkaProducerApplication {
                             "the path to the file with records to send");
         }
 
-        final Properties props = JTSolvKafkaProducerApplication.loadProperties(args[0]);
+        final Properties props = JTSolvKafkaProducerApplicationService.loadProperties(args[0]);
         final String topic = props.getProperty("output.topic.name");
         final Producer<String, String> producer = new KafkaProducer<>(props);
-        final JTSolvKafkaProducerApplication producerApp = new JTSolvKafkaProducerApplication(producer, topic);
+        final JTSolvKafkaProducerApplicationService producerApp = new JTSolvKafkaProducerApplicationService();
 
         String filePath = args[1];
         try {
             List<String> linesToProduce = Files.readAllLines(Paths.get(filePath));
             List<Future<RecordMetadata>> metadata = linesToProduce.stream()
                     .filter(l -> !l.trim().isEmpty())
-                    .map(producerApp::produce)
+                    .map(t -> producerApp.produce(producer,t,topic))
                     .collect(Collectors.toList());
             producerApp.printMetadata(metadata, filePath);
 
@@ -99,7 +95,7 @@ public class JTSolvKafkaProducerApplication {
             System.err.printf("Error reading file %s due to %s %n", filePath, e);
         }
         finally {
-            producerApp.shutdown();
+            producer.close();
         }
     }
 }
