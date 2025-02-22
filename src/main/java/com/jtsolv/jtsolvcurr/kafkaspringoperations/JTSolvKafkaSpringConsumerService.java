@@ -1,6 +1,8 @@
 package com.jtsolv.jtsolvcurr.kafkaspringoperations;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaPartitionData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaSpringThreadData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaThreadsData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaThreadsDataHandler;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,39 +17,9 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class JTSolvKafkaSpringConsumerService {
 
-
     private ReentrantLock lock = new ReentrantLock();
 
-    private ConcurrentHashMap<String, JTSolvKafkaSpringThreadData> map = new ConcurrentHashMap<>();
-
-    private void addThreadDataToStorage(
-            String threadId,
-            String partition,
-            String offset) {
-        if( map.containsKey(threadId) ){
-            dbg("Update message info ( start )");
-            JTSolvKafkaSpringThreadData ktd = map.get(threadId);
-            dbg("Update partition data:" + partition);
-            ktd.addPartition(partition);
-            dbg("Ktd thread id:" + ktd.getThreadId());
-            dbg("Messages count:" + ktd.getMessagesCount());
-            int mc = ktd.getMessagesCount() + 1;
-            ktd.setMessagesCount( mc );
-            ktd.addOffset(partition,offset);
-            dbg("Messages count inc:" + ktd.getMessagesCount());
-            dbg("Update message info ( end )");
-        }else {
-            dbg("Add message info ( start )");
-            JTSolvKafkaSpringThreadData ktd = new JTSolvKafkaSpringThreadData();
-            ktd.setThreadId(threadId);
-            ktd.addPartition(partition);
-            ktd.setMessagesCount( 1 );
-            ktd.addOffset(partition, offset);
-            map.putIfAbsent(threadId, ktd);
-            dbg("Add message info ( end )");
-        }
-
-    }
+    private JTSolvKafkaThreadsData threadsData = new JTSolvKafkaThreadsData();
 
     @KafkaListener(topics = "topic-repl-4", groupId = "jtsolv-group-id-4", concurrency = "10")
     public void listen(String message) {
@@ -116,7 +88,8 @@ public class JTSolvKafkaSpringConsumerService {
         dbg("");
         dbg("Threads ( start ):");
 
-        addThreadDataToStorage(
+        JTSolvKafkaThreadsDataHandler.addThreadDataToStorage(
+                threadsData.getThreads(),
                 String.valueOf(Thread.currentThread().getId()),
                 partition,
                 offset);
@@ -129,12 +102,13 @@ public class JTSolvKafkaSpringConsumerService {
         dbg("");
 
     }
+
     private void dbg(String txt) {
         System.out. println(txt);
     }
 
     private void printThreads() {
-        map
+        threadsData.getThreads()
             .entrySet()
             .stream()
             .forEach(this::printEntry);

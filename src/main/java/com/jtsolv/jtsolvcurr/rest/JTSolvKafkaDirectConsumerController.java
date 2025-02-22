@@ -49,15 +49,22 @@ public class JTSolvKafkaDirectConsumerController {
 
     @GetMapping("/kafka/read-direct-get")
     public JTSolvKafkaResultData sendMessageGet(
-            @RequestParam("message") String topic,
-            @RequestParam("message") String message,
-            @RequestParam("numbers") String numbers) {
+            @RequestParam("groupId") String groupId,
+            @RequestParam("topic") String topic,
+            @RequestParam("brokerId") String brokerId,
+            @RequestParam("numbers") String numbers,
+            @RequestParam("startoffset") String startoffset,
+            @RequestParam("endoffset") String endoffset) {
 
         try{
-            JTSolvKafkaResultData result = messageProducer.produceMessage(
-                    topic,
-                    message,
-                    Integer.valueOf( numbers));
+            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            dt.setGroupId(groupId);
+            dt.setTopic(topic);
+            dt.setBrokerId(brokerId);
+            dt.setNumbers(numbers);
+            dt.setStartoffset(startoffset);
+            dt.setEndoffset(endoffset);
+            JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
             return result;
         } catch (Exception e) {
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
@@ -67,5 +74,4 @@ public class JTSolvKafkaDirectConsumerController {
         }
 
     }
-
 }

@@ -25,7 +25,10 @@ public class JTSolvKafkaDirectConsumerService {
         consumeMessageInternal(
                 "jtsolv-group-2",
                 "topic-repl-4",
-                "192.168.55.103:9092",0,0,0);
+                "192.168.55.103:9092",
+                "0",
+                "0",
+                "0");
     }
 
 
@@ -41,7 +44,9 @@ public class JTSolvKafkaDirectConsumerService {
                 dt.getNumbers(),
                 dt.getStartoffset(),
                 dt.getEndoffset());
+
         dbg(mtd + "start");
+
         return resultDt;
     }
 
@@ -74,28 +79,28 @@ public class JTSolvKafkaDirectConsumerService {
         int ii = 0;
         while (true) {
             long milliseconds = 1000;
-            dbg("Consume in loop number:" + ii);
-            dbg("Consumer pool start wait for milisecons:" + ii);
+            dbg(mtd +"Consume in loop number:" + ii);
+            dbg(mtd +"Consumer pool start wait for milisecons:" + ii);
             consumer.poll(milliseconds).forEach(record -> {
-                dbg("Consumed message: " + record.value() );
-                dbg("Consumed from partition: " + record.partition());
-                dbg("Consumed offset: " + record.offset());
-                dbg("Consumed key: " + record.key());
-                dbg("Consumed groupId: " + consumer.groupMetadata().groupId());
-                dbg("Consumed memberId: " + consumer.groupMetadata().memberId());
-                dbg("Consumed generationId: " + consumer.groupMetadata().generationId());
+                dbg(mtd + "Consumed message: " + record.value() );
+                dbg(mtd + "Consumed from partition: " + record.partition());
+                dbg(mtd + "Consumed offset: " + record.offset());
+                dbg(mtd + "Consumed key: " + record.key());
+                dbg(mtd + "Consumed groupId: " + consumer.groupMetadata().groupId());
+                dbg(mtd + "Consumed memberId: " + consumer.groupMetadata().memberId());
+                dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
             });
             ii++;
-            dbg("Sleep start:");
+            dbg(mtd +"Sleep start:");
             if (ii > Long.valueOf(numberOfMessages)){
                 break;
             }
             try {
                 Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                err("error", e);
             }
-            dbg("Sleep end:");
+            dbg(mtd +"Sleep end:");
 
         }
         return resultData;
@@ -105,7 +110,7 @@ public class JTSolvKafkaDirectConsumerService {
         logger.trace(txt);
     }
 
-    private String err (String txt){
+    private static String err (String txt, Exception e){
         logger.trace(txt);
         logger.error(txt);
         return txt;

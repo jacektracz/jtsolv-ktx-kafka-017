@@ -6,6 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class JTSolvKafkaResultData {
+
+    private String resultCode;
+    private String resultSuccessMessage;
+    private String resultErrorMessage;
+
     public String getResultCode() {
         return resultCode;
     }
@@ -30,7 +35,4 @@ public class JTSolvKafkaResultData {
         this.resultErrorMessage = resultErrorMessage;
     }
 
-    private String resultCode;
-    private String resultSuccessMessage;
-    private String resultErrorMessage;
 }
