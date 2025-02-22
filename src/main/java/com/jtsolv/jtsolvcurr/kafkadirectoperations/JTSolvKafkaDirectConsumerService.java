@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.Properties;
 
-public class JTSolvKafkaConsumerService {
+public class JTSolvKafkaDirectConsumerService {
 
-    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaConsumerService.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectConsumerService.class.getName());
 
     private static String getCn() {
-        return JTSolvKafkaTopicCreatorService.class.getName();
+        return JTSolvKafkaDirectTopicCreatorService.class.getName();
     }
 
     public static void main(String[] args) {

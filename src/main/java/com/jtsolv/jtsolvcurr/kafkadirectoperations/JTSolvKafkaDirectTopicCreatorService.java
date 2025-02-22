@@ -12,12 +12,12 @@ import java.util.Collections;
 import java.util.Properties;
 
 @Component
-public class JTSolvKafkaTopicCreatorService {
+public class JTSolvKafkaDirectTopicCreatorService {
 
-    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaTopicCreatorService.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectTopicCreatorService.class.getName());
 
     private String getCn() {
-        return JTSolvKafkaTopicCreatorService.class.getName();
+        return JTSolvKafkaDirectTopicCreatorService.class.getName();
     }
 
     public  void createTopic(

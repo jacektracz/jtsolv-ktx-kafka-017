@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-public class JTSolvKafkaProducerService {
+public class JTSolvKafkaDirectProducerService {
 
-    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaProducerService.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectProducerService.class.getName());
 
     private static String getCn() {
-        return JTSolvKafkaTopicCreatorService.class.getName();
+        return JTSolvKafkaDirectTopicCreatorService.class.getName();
     }
 
     public static void main(String[] args) {
