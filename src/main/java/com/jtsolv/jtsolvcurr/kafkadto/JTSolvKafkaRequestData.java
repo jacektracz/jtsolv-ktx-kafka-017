@@ -14,6 +14,16 @@ public class JTSolvKafkaRequestData {
     private String threadSleepPooling = "1000";
     private String threadKafkaPoolingTime = "1000";
     private String keyPrefix= "";
+    private String kafkaServer = "192.168.55.103:9092";
+
+    public String getKafkaServer() {
+        return kafkaServer;
+    }
+
+    public void setKafkaServer(String kafkaServer) {
+        this.kafkaServer = kafkaServer;
+    }
+
 
     public String getThreadKafkaPoolingTime() {
         return threadKafkaPoolingTime;

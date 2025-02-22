@@ -1,6 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaProducerExample.java
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -22,20 +23,18 @@ public class JTSolvKafkaDirectProducerService {
     }
 
     public static void main(String[] args) {
-        produceMessagesInternal("jtsolv-raw-topic--002","33",300);
-        produceMessagesInternal("topic-repl-4","34",300);
+        //produceMessagesInternal("jtsolv-raw-topic--002","33",300);
+        //produceMessagesInternal("topic-repl-4","34",300);
     }
 
     public JTSolvKafkaResultData produceMessage(
-            String topic,
-            String keyPrefix,
-            int numberOfMessages) {
+            JTSolvKafkaRequestData dt
+            ) {
 
         String mtd = getCn() + ":produceMessage:";
         dbg(mtd + "start");
-
         try {
-            produceMessagesInternal(topic, keyPrefix, numberOfMessages);
+            produceMessagesInternal(dt);
         } catch (Exception e) {
             dbg(mtd + "Error creating topic: " + e.getMessage());
             err(mtd + "Error creating topic: " + e.getMessage());
@@ -51,25 +50,23 @@ public class JTSolvKafkaDirectProducerService {
     }
 
     public static void produceMessagesInternal(
-            String topic,
-            String keyPrefix,
-            int numberOfMessages) {
+            JTSolvKafkaRequestData dt
+            ) {
         String mtd = getCn() + ":produceMessagesInternal:";
         dbg(mtd + "start");
-
+        String topic = dt.getTopic();
+        String keyPrefix = dt.getKeyPrefix();
+        long numberOfSend = Long.valueOf(dt.getNumbers());
         // Set Kafka producer properties
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "192.168.55.103:9092"); // Kafka server
+        properties.put("bootstrap.servers", dt.getKafkaServer()); // Kafka server
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
 
         // Create the Kafka producer
         Producer<String, String> producer = new KafkaProducer<>(properties);
-
-
         String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic;
-        String initialValue = initialKey + " Hello Kafka By Jacek Tracz (JTSOLV)!:";
-        int numberOfSend = numberOfMessages;
+        String initialValue = initialKey + dt.getMessageValue();
         for (int ii =0 ; ii< numberOfSend; ii++ ) {
             String key = initialKey + ii;
             String value = initialValue + ii + "--" + key;

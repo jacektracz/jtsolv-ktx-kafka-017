@@ -2,6 +2,7 @@ package com.jtsolv.jtsolvcurr.rest;
 
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectProducerService;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,12 @@ public class JTSolvKafkaDirectProducerController {
             @RequestParam("message") String message,
             @RequestParam("numbers") String numbers) {
         try{
-            JTSolvKafkaResultData result = messageProducer.produceMessage(
-                    topic,
-                    message,
-                    Integer.valueOf( numbers));
+            JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
+            dt.setTopic(topic);
+            dt.setMessageValue(message);
+            dt.setNumbers(numbers);
+            JTSolvKafkaResultData result = messageProducer.produceMessage(dt);
+            result.setResultCode("200");
             return result;
         } catch (Exception e) {
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
@@ -41,10 +44,12 @@ public class JTSolvKafkaDirectProducerController {
             @RequestParam("numbers") String numbers) {
 
         try{
-            JTSolvKafkaResultData result = messageProducer.produceMessage(
-                    topic,
-                    message,
-                    Integer.valueOf( numbers));
+            JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
+            dt.setTopic(topic);
+            dt.setMessageValue(message);
+            dt.setNumbers(numbers);
+            JTSolvKafkaResultData result = messageProducer.produceMessage(dt);
+            result.setResultCode("200");
             return result;
         } catch (Exception e) {
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
