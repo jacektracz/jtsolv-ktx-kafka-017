@@ -2,6 +2,7 @@ package com.jtsolv.jtsolvcurr.kafkadto;
 
 public class JTSolvKafkaMessageData {
 
+    private String kafkaMessageResultCode = "";
     private String kafkaMessageThreadId;
     private String kafkaMessagePartitionId;
     private String kafkaMessageValue;
@@ -114,6 +115,13 @@ public class JTSolvKafkaMessageData {
 
     public void setKafkaMessageTimestamp(String kafkaMessageTimestamp) {
         this.kafkaMessageTimestamp = kafkaMessageTimestamp;
+    }
+    public String getKafkaMessageResultCode() {
+        return kafkaMessageResultCode;
+    }
+
+    public void setKafkaMessageResultCode(String kafkaMessageResultCode) {
+        this.kafkaMessageResultCode = kafkaMessageResultCode;
     }
 
 }

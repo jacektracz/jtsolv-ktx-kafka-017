@@ -31,7 +31,7 @@ public class JTSolvKafkaDirectProducerController {
     }
 
     @PostMapping("/api/jtsolv-kafka/send-message-direct-by-post")
-    public JTSolvKafkaResultData sendMessage(
+    public JTSolvKafkaResultData sendMessageByPost(
             @RequestParam("server") String server,
             @RequestParam("message") String topic,
             @RequestParam("message") String message,
@@ -42,6 +42,7 @@ public class JTSolvKafkaDirectProducerController {
         try{
             JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
             dt.setKafkaServer(server);
+            dt.setBrokerId(server);
             dt.setTopic(topic);
             dt.setMessageValue(message);
             dt.setNumbers(numbers);
@@ -71,6 +72,7 @@ public class JTSolvKafkaDirectProducerController {
 
             JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
             dt.setKafkaServer(server);
+            dt.setBrokerId(server);
             dt.setTopic(topic);
             dt.setMessageValue(message);
             dt.setNumbers(numbers);

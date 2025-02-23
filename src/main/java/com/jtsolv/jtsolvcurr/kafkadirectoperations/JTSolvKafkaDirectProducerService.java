@@ -78,12 +78,15 @@ public class JTSolvKafkaDirectProducerService {
                     String value = initialValue + ii + "--" + key;
                     sendValue(result, producer, topic, key, value);
                 } catch (Exception ex) {
-                    err("error-occured-for-sending-one-message", ex);
+                    result.setResultErrorMessage(
+                            err("error-occured-for-sending-one-message", ex));
+                    result.setResultCode("500");
                 }
             }
-            // Send a record (message)
         } catch (Exception ex ) {
-            err("error-occured-for-sending-messages", ex);
+            result.setResultErrorMessage(
+                    err("error-occured-for-sending-messages", ex));
+            result.setResultCode("500");
         }
         finally {
             if ( producer != null ) {
@@ -112,6 +115,8 @@ public class JTSolvKafkaDirectProducerService {
                 errValue.setKafkaMessageErrorMessage(
                         dbg(mtd + "Error while producing message: "
                                 + exception.getMessage()));
+                errValue.setKafkaMessageResultCode("500");
+                result.setResultCode("500");
                 result.getResultMessages().add(errValue);
             } else {
                 JTSolvKafkaMessageData successValue = new JTSolvKafkaMessageData();
@@ -127,6 +132,7 @@ public class JTSolvKafkaDirectProducerService {
                 dbg(mtd + "Message: " + value);
                 successValue.setKafkaMessageValue(String.valueOf(value));
                 dbg(mtd + "HasTimestamp: " + metadata.hasTimestamp());
+                successValue.setKafkaMessageResultCode("200");
                 result.getResultMessages().add(successValue);
             }
         });
