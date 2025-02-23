@@ -21,19 +21,19 @@ public class JTSolvMysqlController {
     }
 
 
-    @GetMapping("/kafka/send-get-test")
+    @GetMapping("/jtsolv-kafka/send-get-test")
     public String sendMessageTestByGet(@RequestParam("topic") String topic,
                                        @RequestParam("message") String message) {
         return "Message sent: " + topic + " " + message;
     }
 
-    @GetMapping("/kafka/conn-test-2")
+    @GetMapping("/jtsolv-kafka/conn-test-2")
     public String connTest2(@RequestParam("topic") String topic,
                                        @RequestParam("message") String message) {
         return "Message sent: " + topic + " " + message;
     }
 
-    @GetMapping("/kafka/conn-test")
+    @GetMapping("/jtsolv-kafka/conn-test")
     public String connectionToMysqlTest(@RequestParam("url") String url,
                                         @RequestParam("user") String user,
                                        @RequestParam("password") String password) {
@@ -42,7 +42,7 @@ public class JTSolvMysqlController {
         return "test: " + info;
     }
 
-    @GetMapping("/kafka/conn-p")
+    @GetMapping("/jtsolv-kafka/conn-p")
     public String connectionToMysqlTestByParam(
             @RequestParam("dbhost") String dbhost,
             @RequestParam("dbport") String dbport,

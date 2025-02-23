@@ -14,14 +14,14 @@ public class JTSolvKafkaSpringController {
     @Autowired
     private JTSolvKafkaSpringProducerService messageProducer;
 
-    @PostMapping("/kafka/send-post")
+    @PostMapping("/jtsolv-kafka/send-post")
     public String sendMessage(@RequestParam("message") String topic,
                               @RequestParam("message") String message) {
         messageProducer.sendMessage("jtsolv-test-topic-4", message);
         return "Message sent: " + message;
     }
 
-    @GetMapping("/kafka/send-get")
+    @GetMapping("/jtsolv-kafka/send-get")
     public String sendMessageGet(@RequestParam("message") String topic, @RequestParam("message") String message) {
         messageProducer.sendMessage(topic, message);
         return "Message sent: " + message;

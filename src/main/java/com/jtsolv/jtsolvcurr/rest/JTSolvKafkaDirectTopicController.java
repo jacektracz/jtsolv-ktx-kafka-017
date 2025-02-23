@@ -21,7 +21,7 @@ public class JTSolvKafkaDirectTopicController {
         this.topicsManager = messageConsumer;
     }
 
-    @PostMapping("/kafka/create-topic-post")
+    @PostMapping("/jtsolv-kafka/create-topic-post")
     public JTSolvKafkaResultData createTopicByPost(
             @RequestParam("topic") String topic,
             @RequestParam("brokerId") String brokerId) {
@@ -39,7 +39,7 @@ public class JTSolvKafkaDirectTopicController {
         }
     }
 
-    @GetMapping("/kafka/create-topic-get")
+    @GetMapping("/jtsolv-kafka/create-topic-get")
     public JTSolvKafkaResultData createTopicByGet(
             @RequestParam("topic") String topic,
             @RequestParam("brokerId") String brokerId) {
