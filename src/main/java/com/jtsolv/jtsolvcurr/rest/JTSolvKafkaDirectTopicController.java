@@ -35,16 +35,21 @@ public class JTSolvKafkaDirectTopicController {
     public JTSolvKafkaResultData createTopicByPost(
             @RequestParam("topic") String topic,
             @RequestParam("brokerId") String brokerId) {
+        String mtd = getCn() + ":createTopicByPost:";
+        dbg(mtd + "start");
         try{
+
             JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
             JTSolvKafkaResultData result = topicsManager.createTopic(dt);
+            dbg(mtd + "end");
             return result;
         } catch (Exception e) {
+            String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
             resultErr.setResultCode("500");
-            resultErr.setResultErrorMessage(e.getMessage());
+            resultErr.setResultErrorMessage(msg);
             return resultErr;
         }
     }
@@ -64,10 +69,10 @@ public class JTSolvKafkaDirectTopicController {
             dbg(mtd + "end");
             return result;
         } catch (Exception e) {
-            err(mtd + "start",e);
+            String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
             resultErr.setResultCode("500");
-            resultErr.setResultErrorMessage(e.getMessage());
+            resultErr.setResultErrorMessage(msg);
             return resultErr;
         }
     }
@@ -79,8 +84,8 @@ public class JTSolvKafkaDirectTopicController {
 
     private String err (String txt,Exception ex){
         JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
-        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
-        return txt;
+        String txtOut = JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
+        return txtOut;
     }
 
 }

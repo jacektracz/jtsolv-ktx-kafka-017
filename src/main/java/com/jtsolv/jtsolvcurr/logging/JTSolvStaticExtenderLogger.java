@@ -22,23 +22,29 @@ public class JTSolvStaticExtenderLogger {
 	}
 
 
-	public static void logGenericException(Logger logger, Exception ex,String pss) {
+	public static String logGenericException(Logger logger, Exception ex,String pss) {
 		try {
+			String strOut = "";
 			logger.info("GENERIC_LOGGER_EX:" + pss);
 			systemOut("GENERIC_LOGGER_EX:" + pss);
+			strOut = "ERR-CONTEXT-INFO:" + pss;
 			String message = "";
 			if(ex != null) {
 				message = ex.getMessage();
 			}
-			if(ex != null) {
-				logger.error("GENERIC_LOGGER_EX:" + message);
-				systemOut("GENERIC_LOGGER_EX:" + message);
-			}
+			logger.error("GENERIC_LOGGER_EX:" + message);
+			systemOut("GENERIC_LOGGER_EX:" + message);
+			strOut = strOut + "ERR-MESSAGE-INFO:" ;
+			strOut = strOut + message;
 			logger.error("GENERIC_LOGGER_EX:" + getStackTraceAsString(ex));
 			systemOut("GENERIC_LOGGER_EX:" + getStackTraceAsString(ex));
+			strOut = strOut + "ERR-STACK-INFO:" ;
+			strOut = strOut + getStackTraceAsString(ex);
+			return strOut;
 
 		}catch(Exception exin) {
 			systemOut("GENERIC_LOGGER_EX_IN:" + exin.getMessage());
+			return "GENERIC_LOGGER_EX_IN:" + exin.getMessage();
 		}
 	}
 

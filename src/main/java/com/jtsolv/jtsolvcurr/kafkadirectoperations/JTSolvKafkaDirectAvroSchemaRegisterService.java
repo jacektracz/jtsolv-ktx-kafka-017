@@ -1,5 +1,6 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
+import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import io.confluent.kafka.schemaregistry.avro.AvroSchema;
 import io.confluent.kafka.schemaregistry.client.CachedSchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
@@ -41,7 +42,7 @@ public class JTSolvKafkaDirectAvroSchemaRegisterService {
             dbg("Schema registered successfully with ID: " + schemaId);
         } catch (Exception e) {
             dbg("Error while registering schema: " + e.getMessage());
-            err("Error while registering schema: " + e.getMessage());
+            err("Error while registering schema: " + e.getMessage(),e);
         }
     }
 
@@ -49,10 +50,10 @@ public class JTSolvKafkaDirectAvroSchemaRegisterService {
         logger.trace(txt);
     }
 
-    private static String err (String txt){
-        logger.trace(txt);
-        logger.error(txt);
-        return txt;
+    private static String err (String txt,Exception ex){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        String txtOut = JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
+        return txtOut;
     }
 
 }

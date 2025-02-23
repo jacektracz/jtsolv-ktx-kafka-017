@@ -126,10 +126,10 @@ public class JTSolvKafkaDirectProducerService {
         return txt;
     }
 
-    private static String err (String txt,Exception ex){
+    private String err (String txt,Exception ex){
         JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
-        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
-        return txt;
+        String txtOut = JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
+        return txtOut;
     }
 
 }
