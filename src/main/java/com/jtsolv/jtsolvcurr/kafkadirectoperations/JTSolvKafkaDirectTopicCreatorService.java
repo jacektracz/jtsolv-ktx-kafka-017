@@ -1,5 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -20,11 +22,14 @@ public class JTSolvKafkaDirectTopicCreatorService {
         return JTSolvKafkaDirectTopicCreatorService.class.getName();
     }
 
-    public  void createTopic(
-            String pbootstrapServers,
-            String ptopicName) {
+    public JTSolvKafkaResultData createTopic(
+            JTSolvKafkaRequestData dt
+            ) {
         String mtd = getCn() + ":createTopic:";
         dbg(mtd + "start");
+        String pbootstrapServers = dt.getBrokerId();
+        String ptopicName = dt.getTopic();
+        JTSolvKafkaResultData resultOk = new JTSolvKafkaResultData();
         // Define Kafka broker address (MicroK8s Node IP)
         String bootstrapServers = "192.168.55.105:10992";
         if(!StringUtils.isEmpty(pbootstrapServers)){
@@ -45,10 +50,17 @@ public class JTSolvKafkaDirectTopicCreatorService {
 
             // Create the topic
             adminClient.createTopics(Collections.singletonList(newTopic)).all().get();
-            dbg(mtd + "Topic '" + topicName + "' created successfully!");
+            resultOk.setResultSuccessMessage(
+                    dbg(mtd + "Topic '" + topicName + "' created successfully!"));
+            resultOk.setResultCode("200");
+            return resultOk;
         } catch (Exception e) {
+            JTSolvKafkaResultData resultError = new JTSolvKafkaResultData();
             dbg(mtd + "Error creating topic: " + e.getMessage());
-            err(mtd + "Error creating topic: " + e.getMessage());
+            resultError.setResultErrorMessage(
+                    err(mtd + "Error creating topic: " + e.getMessage()));
+            resultError.setResultCode("500");
+            return resultError;
         }
     }
 

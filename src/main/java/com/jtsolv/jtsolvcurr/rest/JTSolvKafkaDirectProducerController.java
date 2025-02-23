@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JTSolvKafkaDirectProducerController {
 
+    private final JTSolvKafkaDirectProducerService messageProducer;
+
     @Autowired
-    private JTSolvKafkaDirectProducerService messageProducer;
+    public JTSolvKafkaDirectProducerController(JTSolvKafkaDirectProducerService messageProducer){
+        this.messageProducer = messageProducer;
+    }
 
     @PostMapping("/kafka/send-direct-post")
     public JTSolvKafkaResultData sendMessage(
