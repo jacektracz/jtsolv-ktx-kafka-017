@@ -21,7 +21,7 @@ public class JTSolvKafkaDirectConsumerController {
         this.messageConsumer = messageConsumer;
     }
 
-    @PostMapping("/jtsolv-kafka/read-direct-post")
+    @PostMapping("/jtsolv-kafka/read-messge-direct-by-post")
     public JTSolvKafkaResultData readMessage(
             @RequestParam("groupId") String groupId,
             @RequestParam("topic") String topic,
@@ -47,7 +47,7 @@ public class JTSolvKafkaDirectConsumerController {
         }
     }
 
-    @GetMapping("/jtsolv-kafka/read-direct-get")
+    @GetMapping("/jtsolv-kafka/read-message-direct-by-get")
     public JTSolvKafkaResultData sendMessageGet(
             @RequestParam("groupId") String groupId,
             @RequestParam("topic") String topic,
