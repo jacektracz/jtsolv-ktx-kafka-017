@@ -40,11 +40,10 @@ public class JTSolvKafkaDirectProducerService {
             resultOk.setResultCode("200");
             return resultOk;
         } catch (Exception e) {
-            dbg(mtd + "Error creating topic: " + e.getMessage());
-            err(mtd + "Error creating topic: " + e.getMessage(),e);
+            String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
             resultErr.setResultCode("500");
-            resultErr.setResultErrorMessage(e.getMessage());
+            resultErr.setResultErrorMessage(msg);
             return resultErr;
 
         }
@@ -67,18 +66,31 @@ public class JTSolvKafkaDirectProducerService {
         properties.put("value.serializer", StringSerializer.class.getName());
 
         // Create the Kafka producer
-        Producer<String, String> producer = new KafkaProducer<>(properties);
+
         String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic;
         String initialValue = initialKey + dt.getMessageValue();
-        for (int ii =0 ; ii< numberOfSend; ii++ ) {
-            String key = initialKey + ii;
-            String value = initialValue + ii + "--" + key;
-            sendValue(result, producer, topic, key, value);
-        }
-        // Send a record (message)
+        Producer<String, String> producer = new KafkaProducer<>(properties);
+        try {
 
+            for (int ii = 0; ii < numberOfSend; ii++) {
+                try {
+                    String key = initialKey + ii;
+                    String value = initialValue + ii + "--" + key;
+                    sendValue(result, producer, topic, key, value);
+                } catch (Exception ex) {
+                    err("error-occured-for-sending-one-message", ex);
+                }
+            }
+            // Send a record (message)
+        } catch (Exception ex ) {
+            err("error-occured-for-sending-messages", ex);
+        }
+        finally {
+            if ( producer != null ) {
+                producer.close();
+            }
+        }
         // Close the producer
-        producer.close();
         dbg(mtd + "end");
         return result;
     }
@@ -126,7 +138,7 @@ public class JTSolvKafkaDirectProducerService {
         return txt;
     }
 
-    private String err (String txt,Exception ex){
+    private static String err (String txt,Exception ex){
         JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
         String txtOut = JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
         return txtOut;
