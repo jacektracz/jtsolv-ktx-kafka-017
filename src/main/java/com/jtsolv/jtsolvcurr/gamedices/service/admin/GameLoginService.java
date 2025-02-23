@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.gamedices.service.admin;
 
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import com.jtsolv.jtsolvcurr.gamedices.dto.GameLoginDTO;
 import com.jtsolv.jtsolvcurr.gamedices.mappers.crud.GameLoginMapperCrud;
 import com.jtsolv.jtsolvcurr.gamedices.mappers.entity.GameLoginMapperEntity;
@@ -104,7 +104,7 @@ public class GameLoginService  {
     {
         
         String ss = "";
-        LkdGenericLogger.logInfo(getDbgClassName() + ";" + p_fun + ":" + p_cc);
+        JTSolvGenericLogger.logInfo(getDbgClassName() + ";" + p_fun + ":" + p_cc);
         return ss;
     }
     

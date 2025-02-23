@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.DiceEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.DiceRepositoryEntity;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,25 +20,25 @@ public class GameDiceController {
 
     @GetMapping("/dice")
     public List<DiceEntity> getDices() {
-        LkdGenericLogger.logGenericInfo("getDices");
+        JTSolvGenericLogger.logGenericInfo("getDices");
         try {
             List<DiceEntity> lst = diceRepository.findAll();
             return lst;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex,"getDices");
+            JTSolvGenericLogger.logGenericException(ex,"getDices");
             throw ex;
         }
     }
 
     @PostMapping("/dice")
     void addDice(@RequestBody DiceEntity dice) {
-        LkdGenericLogger.logGenericInfo("addDice--start");
+        JTSolvGenericLogger.logGenericInfo("addDice--start");
         try {
             dice.setId(null);
             diceRepository.save(dice);
-            LkdGenericLogger.logGenericInfo("addDice--end");
+            JTSolvGenericLogger.logGenericInfo("addDice--end");
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex,"addDice");
+            JTSolvGenericLogger.logGenericException(ex,"addDice");
             throw ex;
         }
 

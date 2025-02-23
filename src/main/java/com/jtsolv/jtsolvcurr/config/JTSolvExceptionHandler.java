@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.config;
 
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class JTSolvExceptionHandler {
         response.put("timestamp", LocalDateTime.now());
         response.put("message", ex.getMessage());
         response.put("status", HttpStatus.NOT_FOUND.value());
-        LkdGenericLogger.logGenericException(ex,"EXCEPTION:" + ex.getMessage());
+        JTSolvGenericLogger.logGenericException(ex,"EXCEPTION:" + ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -33,7 +33,7 @@ public class JTSolvExceptionHandler {
         response.put("timestamp", LocalDateTime.now());
         response.put("message", ex.getMessage());
         response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        LkdGenericLogger.logGenericException(ex,"EXCEPTION:" + ex.getMessage());
+        JTSolvGenericLogger.logGenericException(ex,"EXCEPTION:" + ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
 
-public class LkdGenericLogger {
+public class JTSolvGenericLogger {
 
-	private final static Logger log = LoggerFactory.getLogger(LkdGenericLogger.class);
+	private final static Logger log = LoggerFactory.getLogger(JTSolvGenericLogger.class);
 	
 	public static void logGenericInfo(String pss) {
 		log.info("GENERIC_LOGGER:" + pss);

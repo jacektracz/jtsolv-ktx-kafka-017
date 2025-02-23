@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.GameItemEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.GameItemRepositoryEntity;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +22,11 @@ public class GameItemController {
     public List<GameItemEntity> getGameItems() {
 
         String sm = "getGameItems";
-        LkdGenericLogger.logGenericInfo(sm + "-start");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start");
         try {
             return (List<GameItemEntity>) gameItemRepository.findAll();
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception");
             throw ex;
         }
         //LkdGenericLogger.logGenericInfo(sm + "addGame-end");
@@ -35,14 +35,14 @@ public class GameItemController {
     @PostMapping("/game-item")
     void addGameItem(@RequestBody GameItemEntity gameItem) {
         String sm = "addGameItem";
-        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start-method");
         try {
             gameItem.setId(null);
             gameItemRepository.save(gameItem);
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception-occ");
             throw ex;
         }
-        LkdGenericLogger.logGenericInfo(sm + "-end-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-end-method");
     }
 }

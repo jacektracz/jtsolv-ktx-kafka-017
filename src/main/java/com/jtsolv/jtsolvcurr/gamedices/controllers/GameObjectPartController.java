@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.GameObjectPartEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.GameObjectPartRepositoryEntity;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +22,13 @@ public class GameObjectPartController {
     @GetMapping("/game-object-part")
     public List<GameObjectPartEntity> getGameObjectParts() {
         String sm = "getGameObjectParts";
-        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start-method");
         try {
             List<GameObjectPartEntity> lst = gameObjectPartRepository.findAll();
-            LkdGenericLogger.logGenericInfo(sm + "method-end");
+            JTSolvGenericLogger.logGenericInfo(sm + "method-end");
             return lst;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception-occ");
             throw ex;
         }
 
@@ -37,14 +37,14 @@ public class GameObjectPartController {
     @PostMapping("/game-object-part")
     void addGameObjectPart(@RequestBody GameObjectPartEntity gameObjectPart) {
         String sm = "addGameObjectPart";
-        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start-method");
         try {
             gameObjectPart.setId(null);
             gameObjectPartRepository.save(gameObjectPart);
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception-occ");
             throw ex;
         }
-        LkdGenericLogger.logGenericInfo(sm + "-end-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-end-method");
     }
 }

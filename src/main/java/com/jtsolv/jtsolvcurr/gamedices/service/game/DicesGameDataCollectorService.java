@@ -1,7 +1,7 @@
 package com.jtsolv.jtsolvcurr.gamedices.service.game;
 
 import com.jtsolv.jtsolvcurr.gamedices.repository.crud.*;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import com.jtsolv.jtsolvcurr.gamedices.engine.DiceRollEngine;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.GameItemResultCrud;
 import com.jtsolv.jtsolvcurr.gamedices.model.crud.GameStepCrud;
@@ -64,7 +64,7 @@ public class DicesGameDataCollectorService {
 			try {
 				this.gameItemResultRepositoryCrud.save(resultToSave);
 			}catch(Exception ex) {
-				LkdGenericLogger.logGenericException(ex,"saveItem");
+				JTSolvGenericLogger.logGenericException(ex,"saveItem");
 			}
 		}			
 		return ;		

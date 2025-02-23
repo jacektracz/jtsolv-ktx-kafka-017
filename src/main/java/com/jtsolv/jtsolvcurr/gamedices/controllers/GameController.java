@@ -1,9 +1,8 @@
 package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
-import com.jtsolv.jtsolvcurr.gamedices.model.entity.DiceEntity;
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.GameEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.GameRepositoryEntity;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,28 +20,28 @@ public class GameController {
 
     @GetMapping("/game")
     public List<GameEntity> getGames() {
-        LkdGenericLogger.logGenericInfo("getGames--start");
+        JTSolvGenericLogger.logGenericInfo("getGames--start");
         try {
             List<GameEntity> outList = gameRepository.findAll();
-            LkdGenericLogger.logGenericInfo("getGames--end");
+            JTSolvGenericLogger.logGenericInfo("getGames--end");
             return outList;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex,"getGames");
+            JTSolvGenericLogger.logGenericException(ex,"getGames");
             throw ex;
         }
     }
 
     @PostMapping("/game")
     void addGame(@RequestBody GameEntity game) {
-        LkdGenericLogger.logGenericInfo("addGame-start");
+        JTSolvGenericLogger.logGenericInfo("addGame-start");
         try {
             game.setId(null);
             gameRepository.save(game);
-            LkdGenericLogger.logGenericInfo("addGame-end");
+            JTSolvGenericLogger.logGenericInfo("addGame-end");
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex,"addGame-exception");
+            JTSolvGenericLogger.logGenericException(ex,"addGame-exception");
             throw ex;
         }
-        LkdGenericLogger.logGenericInfo("addGame-end");
+        JTSolvGenericLogger.logGenericInfo("addGame-end");
     }
 }

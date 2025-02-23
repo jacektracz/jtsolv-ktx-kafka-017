@@ -4,6 +4,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
+import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -40,7 +41,7 @@ public class JTSolvKafkaDirectProducerService {
             return resultOk;
         } catch (Exception e) {
             dbg(mtd + "Error creating topic: " + e.getMessage());
-            err(mtd + "Error creating topic: " + e.getMessage());
+            err(mtd + "Error creating topic: " + e.getMessage(),e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
             resultErr.setResultCode("500");
             resultErr.setResultErrorMessage(e.getMessage());
@@ -120,14 +121,14 @@ public class JTSolvKafkaDirectProducerService {
         dbg(mtd + "end");
     }
 
-    private static String dbg(String txt){
-        logger.trace(txt);
+    private static String dbg (String txt){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
         return txt;
     }
 
-    private String err (String txt){
-        logger.trace(txt);
-        logger.error(txt);
+    private static String err (String txt,Exception ex){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
         return txt;
     }
 

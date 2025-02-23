@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.model.entity.UserEntity;
 import com.jtsolv.jtsolvcurr.gamedices.repository.entity.UserRepository;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class GameUserController {
     @GetMapping("/users")
     public List<UserEntity> getUsers() {
         String sm = "getObjectsByFilter";
-        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start-method");
         try {
             List<UserEntity> ue = userRepository.findAll();
-            LkdGenericLogger.logGenericInfo(sm + "method-end");
+            JTSolvGenericLogger.logGenericInfo(sm + "method-end");
             return ue;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception-occ");
             throw ex;
         }
 
@@ -36,12 +36,12 @@ public class GameUserController {
     @PostMapping("/users")
     void addUser(@RequestBody UserEntity user) {
         String sm = "addUser";
-        LkdGenericLogger.logGenericInfo(sm + "-start-method");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start-method");
         try {
             user.setId(null);
             userRepository.save(user);
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception-occ");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception-occ");
             throw ex;
         }
     }

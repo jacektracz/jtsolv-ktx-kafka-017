@@ -2,6 +2,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
+import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -53,25 +54,26 @@ public class JTSolvKafkaDirectTopicCreatorService {
             resultOk.setResultSuccessMessage(
                     dbg(mtd + "Topic '" + topicName + "' created successfully!"));
             resultOk.setResultCode("200");
+            dbg(mtd + "end-method");
             return resultOk;
         } catch (Exception e) {
             JTSolvKafkaResultData resultError = new JTSolvKafkaResultData();
             dbg(mtd + "Error creating topic: " + e.getMessage());
             resultError.setResultErrorMessage(
-                    err(mtd + "Error creating topic: " + e.getMessage()));
+                    err(mtd + "Error creating topic: " , e));
             resultError.setResultCode("500");
             return resultError;
         }
     }
 
     private String dbg (String txt){
-        logger.trace(txt);
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
         return txt;
     }
 
-    private String err (String txt){
-        logger.trace(txt);
-        logger.error(txt);
+    private String err (String txt,Exception ex){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
         return txt;
     }
 

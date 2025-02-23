@@ -1,9 +1,8 @@
 package com.jtsolv.jtsolvcurr.gamedices.controllers;
 
 import com.jtsolv.jtsolvcurr.gamedices.dto.GameItemResultDTO;
-import com.jtsolv.jtsolvcurr.gamedices.model.entity.GameItemEntity;
 import com.jtsolv.jtsolvcurr.gamedices.service.admin.GameItemResultService;
-import com.jtsolv.jtsolvcurr.logging.LkdGenericLogger;
+import com.jtsolv.jtsolvcurr.logging.JTSolvGenericLogger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +24,13 @@ private final GameItemResultService gameItemResultService;
     public List<GameItemResultDTO> getGameItemResults() {
 
         String sm = "getGameItemResults";
-        LkdGenericLogger.logGenericInfo(sm + "-start");
+        JTSolvGenericLogger.logGenericInfo(sm + "-start");
         try {
             final List<GameItemResultDTO> objects =  this.gameItemResultService.findAll();
-            LkdGenericLogger.logGenericInfo(sm + "addGame-end");
+            JTSolvGenericLogger.logGenericInfo(sm + "addGame-end");
             return objects;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "-exception");
+            JTSolvGenericLogger.logGenericException(ex, sm + "-exception");
             throw ex;
         }
     }
@@ -40,15 +39,15 @@ private final GameItemResultService gameItemResultService;
     void addGameItemResult(@RequestBody GameItemResultDTO gameItemResultDTO) {
 
         String sm = "getGameItemResults-";
-        LkdGenericLogger.logGenericInfo(sm + "-method-start");
+        JTSolvGenericLogger.logGenericInfo(sm + "-method-start");
         try {
             gameItemResultDTO.setId(null);
             this.gameItemResultService.createCrud(gameItemResultDTO) ;
         } catch (Exception ex) {
-            LkdGenericLogger.logGenericException(ex, sm + "method--exception");
+            JTSolvGenericLogger.logGenericException(ex, sm + "method--exception");
             throw ex;
         }
-        LkdGenericLogger.logGenericInfo(sm + "method-end");
+        JTSolvGenericLogger.logGenericInfo(sm + "method-end");
 
     }
 }

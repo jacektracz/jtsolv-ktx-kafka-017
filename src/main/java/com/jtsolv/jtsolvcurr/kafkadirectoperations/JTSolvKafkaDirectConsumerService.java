@@ -4,6 +4,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
+import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -113,13 +114,14 @@ public class JTSolvKafkaDirectConsumerService {
         return resultData;
     }
 
-    private static void dbg(String txt){
-        logger.trace(txt);
+    private static String dbg (String txt){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        return txt;
     }
 
-    private static String err (String txt, Exception e){
-        logger.trace(txt);
-        logger.error(txt);
+    private static String err (String txt,Exception ex){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
         return txt;
     }
 

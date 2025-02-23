@@ -1,10 +1,13 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
+import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.DescribeTopicsResult;
 import org.apache.kafka.clients.admin.TopicDescription;
 import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -13,13 +16,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class JTSolvKafkaDirectPartitionInfoService {
-
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectProducerService.class.getName());
     public static void main(String[] args) {
         getInfoForTopic("jtsolv-raw-topic--002");
         getInfoForTopic("topic-repl-4");
     }
 
     public static void getInfoForTopic(String topicName) {
+        String mtd = "getInfoForTopic";
         Properties props = new Properties();
         props.put("bootstrap.servers", "192.168.55.103:9092");
         props.put("key.deserializer", StringDeserializer.class.getName());
@@ -41,7 +45,7 @@ public class JTSolvKafkaDirectPartitionInfoService {
                                 + " port:" + t.port() )
                         .collect(Collectors.joining("|"));
 
-                System.out.println(
+                dbg(mtd + "" +
                         "Topic:" + topicName +
                         " Partition "
                                 + partition.partition()
@@ -54,4 +58,16 @@ public class JTSolvKafkaDirectPartitionInfoService {
             e.printStackTrace();
         }
     }
+
+    private static String dbg (String txt){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        return txt;
+    }
+
+    private static String err (String txt,Exception ex){
+        JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
+        JTSolvStaticExtenderLogger.logGenericException(logger,ex,txt);
+        return txt;
+    }
+
 }
