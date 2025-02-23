@@ -1,7 +1,7 @@
 package com.jtsolv.jtsolvcurr.rest;
 
 
-import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectConsumerService;
+
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectProducerService;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
