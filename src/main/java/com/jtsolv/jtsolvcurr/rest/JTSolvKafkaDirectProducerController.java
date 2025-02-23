@@ -20,7 +20,7 @@ public class JTSolvKafkaDirectProducerController {
         this.messageProducer = messageProducer;
     }
 
-    @PostMapping("/jtsolv-kafka/send-message-direct-by-post")
+    @PostMapping("/api/jtsolv-kafka/send-message-direct-by-post")
     public JTSolvKafkaResultData sendMessage(
             @RequestParam("server") String server,
             @RequestParam("message") String topic,
@@ -43,7 +43,7 @@ public class JTSolvKafkaDirectProducerController {
         }
     }
 
-    @GetMapping("/jtsolv-kafka/send-message-direct-by-get")
+    @GetMapping("/api/jtsolv-kafka/send-message-direct-by-get")
     public JTSolvKafkaResultData sendMessageGet(
             @RequestParam("server") String server,
             @RequestParam("message") String topic,
