@@ -137,6 +137,7 @@ public class JTSolvKafkaDirectProducerService {
                 successValue.setKafkaMessagePartitionId(String.valueOf(metadata.partition()));
                 dbg(mtd + "Topic: " + metadata.topic());
                 successValue.setKafkaMessageTopic(String.valueOf(metadata.topic()));
+                successValue.setKafkaMessageKey(key.getKeyValue());
                 dbg(mtd + "Offset: " + metadata.offset());
                 successValue.setKafkaMessageOffsetId(String.valueOf(metadata.offset()));
                 dbg(mtd + "Timestamp: " + metadata.timestamp());
