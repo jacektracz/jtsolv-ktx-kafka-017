@@ -33,7 +33,7 @@ public class JTSolvKafkaDirectProducerController {
     @PostMapping("/api/jtsolv-kafka/send-message-direct-by-post")
     public JTSolvKafkaResultData sendMessageByPost(
             @RequestParam("server") String server,
-            @RequestParam("message") String topic,
+            @RequestParam("topic") String topic,
             @RequestParam("message") String message,
             @RequestParam("numbers") String numbers) {
 
@@ -62,14 +62,12 @@ public class JTSolvKafkaDirectProducerController {
     @GetMapping("/api/jtsolv-kafka/send-message-direct-by-get")
     public JTSolvKafkaResultData sendMessageByGet(
             @RequestParam("server") String server,
-            @RequestParam("message") String topic,
+            @RequestParam("topic") String topic,
             @RequestParam("message") String message,
             @RequestParam("numbers") String numbers) {
         String mtd = getCn() + ":sendMessageByGet:";
         dbg(mtd + "start");
-
         try{
-
             JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
             dt.setKafkaServer(server);
             dt.setBrokerId(server);

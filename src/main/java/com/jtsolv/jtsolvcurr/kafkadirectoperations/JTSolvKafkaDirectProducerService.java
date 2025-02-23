@@ -1,9 +1,7 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations;
 
 // KafkaProducerExample.java
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
+import com.jtsolv.jtsolvcurr.kafkadto.*;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -56,7 +54,7 @@ public class JTSolvKafkaDirectProducerService {
         String mtd = getCn() + ":produceMessagesInternal:";
         dbg(mtd + "start");
         JTSolvKafkaResultData result = new JTSolvKafkaResultData();
-        String topic = dt.getTopic();
+        JTSolvKafkaTopicData topic = new JTSolvKafkaTopicData(dt.getTopic());
         String keyPrefix = dt.getKeyPrefix();
         long numberOfSend = Long.valueOf(dt.getNumbers());
         // Set Kafka producer properties
@@ -67,16 +65,23 @@ public class JTSolvKafkaDirectProducerService {
 
         // Create the Kafka producer
 
-        String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic;
+        JTSolvKafkaMessageKeyData initialKey = new JTSolvKafkaMessageKeyData(
+                "key_" + keyPrefix + "_onto_topic_" + topic);
         String initialValue = initialKey + dt.getMessageValue();
         Producer<String, String> producer = new KafkaProducer<>(properties);
         try {
 
             for (int ii = 0; ii < numberOfSend; ii++) {
                 try {
-                    String key = initialKey + ii;
-                    String value = initialValue + ii + "--" + key;
-                    sendValue(result, producer, topic, key, value);
+                    JTSolvKafkaMessageKeyData key = new JTSolvKafkaMessageKeyData(
+                            initialKey.getKeyValue() + ii);
+                    JTSolvKafkaMessageBodyData value = new JTSolvKafkaMessageBodyData(initialValue) ;
+                    sendValue(
+                            result,
+                            producer,
+                            topic,
+                            key,
+                            value);
                 } catch (Exception ex) {
                     result.setResultErrorMessage(
                             err("error-occured-for-sending-one-message", ex));
@@ -101,15 +106,22 @@ public class JTSolvKafkaDirectProducerService {
     private static void sendValue(
             JTSolvKafkaResultData result,
             Producer<String, String> producer,
-            String topic,
-            String key,
-            String value) {
+            JTSolvKafkaTopicData topic,
+            JTSolvKafkaMessageKeyData key,
+            JTSolvKafkaMessageBodyData value) {
         String mtd = getCn() + ":sendValue:";
         dbg(mtd + "start");
 
-        dbg(mtd + "Before send message: [key:" + key + "]");
-        dbg(mtd + "Before send message: [value:" + value + "]");
-        producer.send(new ProducerRecord<>(topic, key, value), (metadata, exception) -> {
+        dbg(mtd + "Before send message: [key:" + key.getKeyValue() + "]");
+        dbg(mtd + "Before send message: [value:" + value.getMessageBodyValue() + "]");
+        dbg(mtd + "Before send message: [topic:" + topic.getTopicValue() + "]");
+
+        producer.send(new ProducerRecord<>(
+                topic.getTopicValue(),
+                key.getKeyValue(),
+                value.getMessageBodyValue()),
+                (metadata, exception) -> {
+
             if (exception != null) {
                 JTSolvKafkaMessageData errValue = new JTSolvKafkaMessageData();
                 errValue.setKafkaMessageErrorMessage(
