@@ -65,17 +65,17 @@ public class JTSolvKafkaDirectProducerService {
 
         // Create the Kafka producer
 
-        JTSolvKafkaMessageKeyData initialKey = new JTSolvKafkaMessageKeyData(
-                "key_" + keyPrefix + "_onto_topic_" + topic);
-        String initialValue = initialKey + dt.getMessageValue();
+        String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic;
+
         Producer<String, String> producer = new KafkaProducer<>(properties);
         try {
 
             for (int ii = 0; ii < numberOfSend; ii++) {
                 try {
                     JTSolvKafkaMessageKeyData key = new JTSolvKafkaMessageKeyData(
-                            initialKey.getKeyValue() + ii);
-                    JTSolvKafkaMessageBodyData value = new JTSolvKafkaMessageBodyData(initialValue) ;
+                            initialKey + "-" + ii);
+                    JTSolvKafkaMessageBodyData value = new JTSolvKafkaMessageBodyData(
+                            dt.getMessageValue()) ;
                     sendValue(
                             result,
                             producer,
