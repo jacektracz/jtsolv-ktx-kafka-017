@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.domainData;
+package com.jtsolv.jtsolvcurr.kafkadto;
 
 import java.util.ArrayList;
 import java.util.List;

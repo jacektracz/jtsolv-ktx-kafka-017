@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkadirectoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import io.confluent.kafka.schemaregistry.avro.AvroSchema;

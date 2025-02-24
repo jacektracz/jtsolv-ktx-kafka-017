@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.mysql;
+package com.jtsolv.jtsolvcurr.mysqlmanagement.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

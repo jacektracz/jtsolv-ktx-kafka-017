@@ -1,7 +1,7 @@
-package com.jtsolv.jtsolvcurr.rest;
+package com.jtsolv.jtsolvcurr.mysqlmanagement.controllers;
 
 
-import com.jtsolv.jtsolvcurr.mysql.JTSolvConnectionService;
+import com.jtsolv.jtsolvcurr.mysqlmanagement.services.JTSolvConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

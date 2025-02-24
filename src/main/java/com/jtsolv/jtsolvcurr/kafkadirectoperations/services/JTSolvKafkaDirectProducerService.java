@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkadirectoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 // KafkaProducerExample.java
 import com.jtsolv.jtsolvcurr.kafkadto.*;

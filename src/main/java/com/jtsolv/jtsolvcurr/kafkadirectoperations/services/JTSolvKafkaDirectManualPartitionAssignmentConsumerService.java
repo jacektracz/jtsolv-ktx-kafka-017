@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkadirectoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;

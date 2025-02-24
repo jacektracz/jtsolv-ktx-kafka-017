@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkadirectoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;

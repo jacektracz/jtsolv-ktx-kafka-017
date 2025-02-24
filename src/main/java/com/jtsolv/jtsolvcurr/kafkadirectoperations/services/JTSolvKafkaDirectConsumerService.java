@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkadirectoperations;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 // KafkaConsumerExample.java
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;

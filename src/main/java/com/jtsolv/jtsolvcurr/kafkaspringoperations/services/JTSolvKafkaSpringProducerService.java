@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaspringoperations;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

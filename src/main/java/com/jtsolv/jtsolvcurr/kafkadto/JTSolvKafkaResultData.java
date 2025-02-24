@@ -14,6 +14,16 @@ public class JTSolvKafkaResultData {
     private String resultErrorMessage = "";
     private List<JTSolvKafkaMessageData> resultMessages = new ArrayList<>();
 
+    public List<JTSolvKafkaTopicData> getResultTopics() {
+        return resultTopics;
+    }
+
+    public void setResultTopics(List<JTSolvKafkaTopicData> resultTopics) {
+        this.resultTopics = resultTopics;
+    }
+
+    private List<JTSolvKafkaTopicData> resultTopics = new ArrayList<>();
+
     public String getPoolThreadSleepTime() {
         return poolThreadSleepTime;
     }

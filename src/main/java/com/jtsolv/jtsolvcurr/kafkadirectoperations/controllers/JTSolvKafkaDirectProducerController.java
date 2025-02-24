@@ -1,8 +1,8 @@
-package com.jtsolv.jtsolvcurr.rest;
+package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 
 
-import com.jtsolv.jtsolvcurr.kafkadirectoperations.JTSolvKafkaDirectProducerService;
+import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectProducerService;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;

@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaspringoperations;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations.configs;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

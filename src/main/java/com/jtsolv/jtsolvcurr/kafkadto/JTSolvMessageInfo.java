@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.domainData;
+package com.jtsolv.jtsolvcurr.kafkadto;
 
 public class JTSolvMessageInfo {
 

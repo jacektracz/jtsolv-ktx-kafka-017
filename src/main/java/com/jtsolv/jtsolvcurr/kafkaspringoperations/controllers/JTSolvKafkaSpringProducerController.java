@@ -1,7 +1,7 @@
-package com.jtsolv.jtsolvcurr.rest;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations.controllers;
 
 
-import com.jtsolv.jtsolvcurr.kafkaspringoperations.JTSolvKafkaSpringProducerService;
+import com.jtsolv.jtsolvcurr.kafkaspringoperations.services.JTSolvKafkaSpringProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

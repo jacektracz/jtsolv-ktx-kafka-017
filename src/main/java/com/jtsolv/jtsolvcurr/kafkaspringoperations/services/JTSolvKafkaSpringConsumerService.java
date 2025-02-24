@@ -1,4 +1,4 @@
-package com.jtsolv.jtsolvcurr.kafkaspringoperations;
+package com.jtsolv.jtsolvcurr.kafkaspringoperations.services;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaPartitionData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaSpringThreadData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaThreadsData;
@@ -13,7 +13,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
