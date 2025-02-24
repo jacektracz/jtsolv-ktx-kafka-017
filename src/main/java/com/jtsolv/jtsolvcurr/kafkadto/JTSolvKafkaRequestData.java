@@ -9,6 +9,7 @@ public class JTSolvKafkaRequestData {
     private String messageValue;
     private String brokerId;
     private String numbers;
+    private String numberOfPoolIterations="10";
     private String startoffset;
     private String endoffset;
     private String threadSleepPooling = "1000";
@@ -106,6 +107,13 @@ public class JTSolvKafkaRequestData {
 
     public void setKeyPrefix(String keyPrefix) {
         this.keyPrefix = keyPrefix;
+    }
+    public String getNumberOfPoolIterations() {
+        return numberOfPoolIterations;
+    }
+
+    public void setNumberOfPoolIterations(String numberOfPoolIterations) {
+        this.numberOfPoolIterations = numberOfPoolIterations;
     }
 
 }

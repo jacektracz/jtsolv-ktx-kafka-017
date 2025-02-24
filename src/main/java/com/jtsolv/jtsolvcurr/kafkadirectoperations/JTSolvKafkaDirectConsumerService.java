@@ -58,7 +58,7 @@ public class JTSolvKafkaDirectConsumerService {
         String groupId = dt.getGroupId();
         String topic = dt.getTopic();
         String brokerId = dt.getBrokerId();
-        String numberOfMessages = dt.getNumbers();
+        Long numberOfMessages = Long.valueOf(dt.getNumbers());
         String startoffest = dt.getStartoffset();
         String endOffset = dt.getEndoffset();
         JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
@@ -110,6 +110,9 @@ public class JTSolvKafkaDirectConsumerService {
                 messageDt.setKafkaMessageValue(record.value());
                 dbg(mtd + "Consumed from partition: " + record.partition());
 
+                messageDt.setKafkaMessageTopic(record.topic());
+                dbg(mtd + "Consumed from topic: " + record.topic());
+
                 messageDt.setKafkaMessagePartitionId(String.valueOf(record.partition()));
                 dbg(mtd + "Consumed offset: " + record.offset());
 
@@ -130,16 +133,17 @@ public class JTSolvKafkaDirectConsumerService {
                 messageDt.setKafkaMessageMemberId(
                         String.valueOf(consumer.groupMetadata().generationId()));
 
+                messageDt.setKafkaMessageResultCode("200");
                 resultData.getResultMessages().add(messageDt);
 
-                if (messagesNumber > Long.valueOf(numberOfMessages)){
+                if (messagesNumber > numberOfMessages){
                     break;
                 }
             }
 
             iterationIdx++;
             dbg(mtd + "Sleep start:");
-            if (iterationIdx > Long.valueOf(numberOfMessages)){
+            if (iterationIdx > Long.valueOf(dt.getNumberOfPoolIterations())){
                 break;
             }
 
