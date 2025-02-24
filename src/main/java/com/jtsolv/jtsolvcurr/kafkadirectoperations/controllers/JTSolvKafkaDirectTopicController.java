@@ -80,13 +80,13 @@ public class JTSolvKafkaDirectTopicController {
 
     @GetMapping("/api/jtsolv-kafka/read-topic-list-by-get")
     public JTSolvKafkaResultData readKafkaTopicListByGet(
-            @RequestParam("brokerId") String brokerId) {
+            @RequestParam("server") String server) {
         String mtd = getCn() + ":readKafkaTopicListByGet:";
         dbg(mtd + "start");
 
         try{
             JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
-            dt.setBrokerId(brokerId);
+            dt.setKafkaServer(server);
             JTSolvKafkaResultData result = topicsReadManager.readTopics(dt);
             dbg(mtd + "end");
             return result;
