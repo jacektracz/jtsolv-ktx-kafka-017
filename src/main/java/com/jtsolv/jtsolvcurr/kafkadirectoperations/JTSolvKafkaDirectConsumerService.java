@@ -106,20 +106,32 @@ public class JTSolvKafkaDirectConsumerService {
                 messagesNumber++;
                 JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
                 dbg(mtd + "Consumed message: " + record.value() );
+
                 messageDt.setKafkaMessageValue(record.value());
                 dbg(mtd + "Consumed from partition: " + record.partition());
+
                 messageDt.setKafkaMessagePartitionId(String.valueOf(record.partition()));
                 dbg(mtd + "Consumed offset: " + record.offset());
+
                 messageDt.setKafkaMessageOffsetId(String.valueOf(record.offset()));
                 dbg(mtd + "Consumed key: " + record.key());
+
                 messageDt.setKafkaMessageKey(String.valueOf(record.key()));
                 dbg(mtd + "Consumed groupId: " + consumer.groupMetadata().groupId());
-                messageDt.setKafkaMessageGroupId(String.valueOf(consumer.groupMetadata().groupId()));
+
+                messageDt.setKafkaMessageGroupId(
+                        String.valueOf(consumer.groupMetadata().groupId()));
                 dbg(mtd + "Consumed memberId: " + consumer.groupMetadata().memberId());
-                messageDt.setKafkaMessageMemberId(String.valueOf(consumer.groupMetadata().memberId()));
+
+                messageDt.setKafkaMessageMemberId(
+                        String.valueOf(consumer.groupMetadata().memberId()));
                 dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
-                messageDt.setKafkaMessageMemberId(String.valueOf(consumer.groupMetadata().generationId()));
+
+                messageDt.setKafkaMessageMemberId(
+                        String.valueOf(consumer.groupMetadata().generationId()));
+
                 resultData.getResultMessages().add(messageDt);
+
                 if (messagesNumber > Long.valueOf(numberOfMessages)){
                     break;
                 }
