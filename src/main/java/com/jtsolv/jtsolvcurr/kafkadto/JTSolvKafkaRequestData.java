@@ -12,7 +12,7 @@ public class JTSolvKafkaRequestData {
     private String startoffset;
     private String endoffset;
     private String threadSleepPooling = "1000";
-    private String threadKafkaPoolingTime = "1000";
+    private String threadKafkaPoolingTime = "10000";
     private String keyPrefix= "";
     private String kafkaServer = "192.168.55.103:9092";
 

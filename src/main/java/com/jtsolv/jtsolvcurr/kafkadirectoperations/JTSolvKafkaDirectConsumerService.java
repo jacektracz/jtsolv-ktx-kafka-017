@@ -59,16 +59,22 @@ public class JTSolvKafkaDirectConsumerService {
         JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
         // Set Kafka consumer properties
         Properties properties = new Properties();
+        String stringSerializer = StringDeserializer.class.getName();
         properties.put("bootstrap.servers", brokerId); // Kafka server
         properties.put("group.id", groupId); // Consumer group
-        properties.put("key.deserializer", StringDeserializer.class.getName());
-        properties.put("value.deserializer", StringDeserializer.class.getName());
+        properties.put("key.deserializer", stringSerializer);
+        properties.put("value.deserializer", stringSerializer);
         properties.put("auto.offset.reset", "earliest"); // Start reading from the earliest message
 
         // Create the Kafka consumer
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
 
         // Subscribe to the topic
+        dbg(mtd + "Subscribe to topic: " + topic );
+        dbg(mtd + "Subscribe to groupId: " + groupId );
+        dbg(mtd + "Subscribe to servers: " + brokerId );
+        dbg(mtd + "Subscribe to value serializer: " + stringSerializer );
+        dbg(mtd + "Subscribe to key serializer: " + stringSerializer );
 
         consumer.subscribe(Collections.singletonList(topic));
 
@@ -77,7 +83,7 @@ public class JTSolvKafkaDirectConsumerService {
         while (true) {
             long milliseconds = Long.valueOf(dt.getThreadKafkaPoolingTime());
             dbg(mtd + "Consume in loop number:" + ii);
-            dbg(mtd + "Consumer pool start wait for milisecons:" + ii);
+            dbg(mtd + "Consumer pool start wait for milliseconds:" + milliseconds);
             consumer.poll(milliseconds).forEach(record -> {
                 JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
                 dbg(mtd + "Consumed message: " + record.value() );

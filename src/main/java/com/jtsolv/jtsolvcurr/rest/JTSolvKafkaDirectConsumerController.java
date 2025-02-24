@@ -37,7 +37,8 @@ public class JTSolvKafkaDirectConsumerController {
             @RequestParam("brokerId") String brokerId,
             @RequestParam("numbers") String numbers,
             @RequestParam("startoffset") String startoffset,
-            @RequestParam("endoffset") String endoffset) {
+            @RequestParam("endoffset") String endoffset,
+            @RequestParam("pooltime") String pooltime) {
         String mtd = getCn() + ":readMessageByPost:";
         dbg(mtd + "start");
 
@@ -49,6 +50,7 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setNumbers(numbers);
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
+            dt.setThreadKafkaPoolingTime(pooltime);
             JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
             dbg(mtd + "end");
             return result;
@@ -68,7 +70,9 @@ public class JTSolvKafkaDirectConsumerController {
             @RequestParam("brokerId") String brokerId,
             @RequestParam("numbers") String numbers,
             @RequestParam("startoffset") String startoffset,
-            @RequestParam("endoffset") String endoffset) {
+            @RequestParam("endoffset") String endoffset,
+            @RequestParam("pooltime") String pooltime) {
+
         String mtd = getCn() + ":readMessageByGet:";
         dbg(mtd + "start");
 
@@ -80,6 +84,7 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setNumbers(numbers);
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
+            dt.setThreadKafkaPoolingTime(pooltime);
             JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
             dbg(mtd + "end");
             return result;
