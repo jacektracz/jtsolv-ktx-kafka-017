@@ -36,11 +36,12 @@ public final class KafkaHighLevelConsumer {
 
   private final KafkaConfiguration kafkaConfiguration;
 
-  public KafkaHighLevelConsumer(KafkaConfiguration kafkaConfiguration) {
+  public KafkaHighLevelConsumer(
+          KafkaConfiguration kafkaConfiguration) {
     this.kafkaConfiguration = kafkaConfiguration;
   }
 
-  @PostConstruct
+  //@PostConstruct
   private void initializeClient() {
     if (kafkaConsumer == null) {
       final var properties = new Properties();
@@ -53,7 +54,6 @@ public final class KafkaHighLevelConsumer {
       properties.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
       try {
         kafkaConfiguration.applyCommon(properties);
-
         kafkaConsumer = new KafkaConsumer<>(properties);
       } catch (Exception ex ){
         System.out.println(ex.getMessage());

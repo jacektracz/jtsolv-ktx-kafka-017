@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.jtsolv.jtsolvcurr.kafkamanagement.model.AclVO;
 import com.jtsolv.jtsolvcurr.kafkamanagement.service.KafkaMonitor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +37,10 @@ import java.util.List;
 @Tag(name = "acl-controller", description = "ACL Controller")
 @Controller
 public final class AclController {
+
   private final KafkaMonitor kafkaMonitor;
 
+  @Autowired
   public AclController(KafkaMonitor kafkaMonitor) {
     this.kafkaMonitor = kafkaMonitor;
   }

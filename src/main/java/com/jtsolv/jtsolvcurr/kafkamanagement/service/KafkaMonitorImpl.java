@@ -49,7 +49,8 @@ public final class KafkaMonitorImpl implements KafkaMonitor {
 
   private final KafkaHighLevelProducer highLevelProducer;
 
-  public KafkaMonitorImpl(KafkaHighLevelConsumer highLevelConsumer, KafkaHighLevelAdminClient highLevelAdminClient,
+  public KafkaMonitorImpl(KafkaHighLevelConsumer highLevelConsumer,
+                          KafkaHighLevelAdminClient highLevelAdminClient,
                           KafkaHighLevelProducer highLevelProducer) {
     this.highLevelConsumer = highLevelConsumer;
     this.highLevelAdminClient = highLevelAdminClient;

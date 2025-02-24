@@ -37,7 +37,7 @@ public final class KafkaHighLevelAdminClient {
     this.kafkaConfiguration = kafkaConfiguration;
   }
 
-  @PostConstruct
+  //@PostConstruct
   public void init() {
     final var properties = new Properties();
     kafkaConfiguration.applyCommon(properties);

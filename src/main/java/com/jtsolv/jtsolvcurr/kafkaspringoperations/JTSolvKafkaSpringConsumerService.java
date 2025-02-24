@@ -39,8 +39,8 @@ public class JTSolvKafkaSpringConsumerService {
     private JTSolvKafkaThreadsData threadsData = new JTSolvKafkaThreadsData();
 
     @KafkaListener(
-            id="listeren-001",
-            topics = "topic-repl-4",
+            id="jtsolv-lisener-001",
+            topics = "jtsolv-topic-repl-4",
             groupId = "jtsolv-group-id-4",
             concurrency = "10",
             autoStartup = "false")
@@ -48,7 +48,8 @@ public class JTSolvKafkaSpringConsumerService {
         handleMessageThreadSafe( message,"","");
     }
 
-    @KafkaListener(id="listeren-002",topics = "topic-repl-4-not-exec",
+    @KafkaListener(id="jtsolv-lisener-002",
+            topics = "jtsolv-topic-repl-4-not-exec",
             groupId = "jtsolv-group-id-5",
             autoStartup = "false")
     public void listen(@Header("kafka_receivedPartitionId") int partition,
@@ -60,8 +61,8 @@ public class JTSolvKafkaSpringConsumerService {
     }
 
     @KafkaListener(
-            id="listeren-003",
-            topics = "t-1-bckp",
+            id="jtsolv-lisener-003",
+            topics = "jtsolv-t-1-bckp",
             groupId = "jtsolv-group-id-6",
             concurrency = "10",
             autoStartup = "false")
@@ -72,8 +73,8 @@ public class JTSolvKafkaSpringConsumerService {
     }
 
     @KafkaListener(
-            id="listeren-004",
-            topics = "topic-repl-4",
+            id="jtsolv-lisener-004",
+            topics = "jtsolv-topic-repl-4",
             groupId = "jtsolv-group-id-7",
             concurrency = "10",
             autoStartup = "false")
@@ -85,8 +86,8 @@ public class JTSolvKafkaSpringConsumerService {
     }
 
     @KafkaListener(
-            id="listeren-004",
-            topics = "topic-repl-4",
+            id="jtsolv-lisener-005",
+            topics = "jtsolv-topic-repl-4",
             groupId = "jtsolv-group-id-8",
             autoStartup = "false")
     public void listen(@Header("kafka_receivedPartitionId") int partition, String message) {

@@ -22,8 +22,14 @@ public class JTSolvKafkaSpringConsumerConfig {
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
+
+        if(kafkaBrokerConnect.equals("k8s")){
+            kafkaBrokerConnect="localhost:9092";
+        }
+
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBrokerConnect);
+        //configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBrokerConnect);
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "jtsolv-group-id-0");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -31,7 +37,7 @@ public class JTSolvKafkaSpringConsumerConfig {
     }
 
     @Bean
-    //@ConditionalOnProperty(name = "kafka.listeners.enabled", havingValue = "true")
+    @ConditionalOnProperty(name = "kafka.listeners.enabled", havingValue = "true")
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());

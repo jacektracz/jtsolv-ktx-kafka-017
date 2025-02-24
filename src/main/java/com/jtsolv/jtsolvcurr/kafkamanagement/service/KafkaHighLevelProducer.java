@@ -27,7 +27,7 @@ public final class KafkaHighLevelProducer {
     this.kafkaConfiguration = kafkaConfiguration;
   }
 
-  @PostConstruct
+  //@PostConstruct
   private void initializeClient() {
     if (kafkaProducer == null) {
       final var properties = new Properties();
@@ -38,7 +38,6 @@ public final class KafkaHighLevelProducer {
       properties.put(ProducerConfig.LINGER_MS_CONFIG, 1);
       properties.put(ProducerConfig.CLIENT_ID_CONFIG, "kafdrop-producer");
       kafkaConfiguration.applyCommon(properties);
-
       kafkaProducer = new KafkaProducer<>(properties);
     }
   }
