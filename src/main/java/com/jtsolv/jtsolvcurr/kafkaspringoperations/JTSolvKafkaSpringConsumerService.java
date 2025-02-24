@@ -5,7 +5,9 @@ import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaThreadsData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaThreadsDataHandler;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
@@ -17,16 +19,38 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class JTSolvKafkaSpringConsumerService {
 
+    private final KafkaListenerEndpointRegistry registry;
+
+    @Autowired
+    public JTSolvKafkaSpringConsumerService(KafkaListenerEndpointRegistry registry){
+        this.registry= registry;
+    }
+
+    public void stopListener(String id) {
+        registry.getListenerContainer(id).stop();
+    }
+
+    public void startListener(String id) {
+        registry.getListenerContainer(id).start();
+    }
+
     private ReentrantLock lock = new ReentrantLock();
 
     private JTSolvKafkaThreadsData threadsData = new JTSolvKafkaThreadsData();
 
-    @KafkaListener(topics = "topic-repl-4", groupId = "jtsolv-group-id-4", concurrency = "10")
+    @KafkaListener(
+            id="listeren-001",
+            topics = "topic-repl-4",
+            groupId = "jtsolv-group-id-4",
+            concurrency = "10",
+            autoStartup = "false")
     public void listen(String message) {
         handleMessageThreadSafe( message,"","");
     }
 
-    @KafkaListener(topics = "topic-repl-4-not-exec", groupId = "jtsolv-group-id-5")
+    @KafkaListener(id="listeren-002",topics = "topic-repl-4-not-exec",
+            groupId = "jtsolv-group-id-5",
+            autoStartup = "false")
     public void listen(@Header("kafka_receivedPartitionId") int partition,
                        @Header("kafka_receivedOffset") long offset,
                        String message) {
@@ -35,14 +59,24 @@ public class JTSolvKafkaSpringConsumerService {
                 String.valueOf(offset));
     }
 
-    @KafkaListener(topics = "t-1-bckp", groupId = "jtsolv-group-id-6", concurrency = "10")
+    @KafkaListener(
+            id="listeren-003",
+            topics = "t-1-bckp",
+            groupId = "jtsolv-group-id-6",
+            concurrency = "10",
+            autoStartup = "false")
     public void listen(Message<String> message) {
         String payload = message.getPayload();
         Integer partition = message.getHeaders().get("kafka_receivedPartitionId", Integer.class);
         handleMessageThreadSafe( message.getPayload(), String.valueOf(partition),"NO-OFFSET-INFO");
     }
 
-    @KafkaListener(topics = "topic-repl-4", groupId = "jtsolv-group-id-7", concurrency = "10")
+    @KafkaListener(
+            id="listeren-004",
+            topics = "topic-repl-4",
+            groupId = "jtsolv-group-id-7",
+            concurrency = "10",
+            autoStartup = "false")
     public void listen(ConsumerRecord<String, String> record) {
         String message = record.value();
         int partition = record.partition();
@@ -50,7 +84,11 @@ public class JTSolvKafkaSpringConsumerService {
         handleMessageThreadSafe( message, String.valueOf(partition),String.valueOf(offset));
     }
 
-    @KafkaListener(topics = "topic-repl-4", groupId = "jtsolv-group-id-8")
+    @KafkaListener(
+            id="listeren-004",
+            topics = "topic-repl-4",
+            groupId = "jtsolv-group-id-8",
+            autoStartup = "false")
     public void listen(@Header("kafka_receivedPartitionId") int partition, String message) {
         handleMessageThreadSafe( message ,String.valueOf(partition),"");
         dbg("Message Partition: " + partition);

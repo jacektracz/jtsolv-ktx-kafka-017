@@ -142,8 +142,8 @@ public class JTSolvKafkaDirectProducerService {
                 successValue.setKafkaMessageOffsetId(String.valueOf(metadata.offset()));
                 dbg(mtd + "Timestamp: " + metadata.timestamp());
                 successValue.setKafkaMessageTimestamp(String.valueOf(metadata.timestamp()));
-                dbg(mtd + "Message: " + value);
-                successValue.setKafkaMessageValue(String.valueOf(value));
+                dbg(mtd + "Message: " + value.getMessageBodyValue());
+                successValue.setKafkaMessageValue(String.valueOf(value.getMessageBodyValue()));
                 dbg(mtd + "HasTimestamp: " + metadata.hasTimestamp());
                 successValue.setKafkaMessageResultCode("200");
                 result.getResultMessages().add(successValue);
