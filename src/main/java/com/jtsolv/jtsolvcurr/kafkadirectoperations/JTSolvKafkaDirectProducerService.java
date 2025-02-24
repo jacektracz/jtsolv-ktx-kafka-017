@@ -58,18 +58,24 @@ public class JTSolvKafkaDirectProducerService {
         String keyPrefix = dt.getKeyPrefix();
         long numberOfSend = Long.valueOf(dt.getNumbers());
         // Set Kafka producer properties
+
+        String server = dt.getKafkaServer();
+        String valueSerializer = StringSerializer.class.getName();
+        String keySerializer = StringSerializer.class.getName();
+        dbg(mtd + "server:" + server);
+        dbg(mtd + "keySerializer:" + keySerializer);
+        dbg(mtd + "valueSerializer:" + valueSerializer);
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", dt.getKafkaServer()); // Kafka server
-        properties.put("key.serializer", StringSerializer.class.getName());
-        properties.put("value.serializer", StringSerializer.class.getName());
+        properties.put("bootstrap.servers", server); // Kafka server
+        properties.put("key.serializer", keySerializer);
+        properties.put("value.serializer", valueSerializer);
 
         // Create the Kafka producer
 
-        String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic;
+        String initialKey = "key_" + keyPrefix + "_onto_topic_" + topic.getTopicValue();
 
         Producer<String, String> producer = new KafkaProducer<>(properties);
         try {
-
             for (int ii = 0; ii < numberOfSend; ii++) {
                 try {
                     JTSolvKafkaMessageKeyData key = new JTSolvKafkaMessageKeyData(
@@ -90,7 +96,7 @@ public class JTSolvKafkaDirectProducerService {
             }
         } catch (Exception ex ) {
             result.setResultErrorMessage(
-                    err("error-occured-for-sending-messages", ex));
+                    err("error-occurred-in-sending-messages", ex));
             result.setResultCode("500");
         }
         finally {
