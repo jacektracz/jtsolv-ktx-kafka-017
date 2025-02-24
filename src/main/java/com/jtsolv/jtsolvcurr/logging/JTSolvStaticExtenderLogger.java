@@ -15,6 +15,7 @@ public class JTSolvStaticExtenderLogger {
 		systemOut(pss);
 		logger.info("GENERIC_LOGGER:" + pss);
 		logger.trace("GENERIC_LOGGER:" + pss);
+		logger.debug("GENERIC_LOGGER:" + pss);
 	}
 
 	public static void systemOut(String pss){

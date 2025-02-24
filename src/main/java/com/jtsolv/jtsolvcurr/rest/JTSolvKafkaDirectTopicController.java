@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JTSolvKafkaDirectTopicController {
 
-    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectConsumerService.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectTopicController.class.getName());
 
     private final JTSolvKafkaDirectTopicCreatorService topicsManager;
 

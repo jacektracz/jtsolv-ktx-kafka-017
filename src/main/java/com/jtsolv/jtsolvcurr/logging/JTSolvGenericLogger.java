@@ -21,9 +21,9 @@ public class JTSolvGenericLogger {
 	
 	public static void logGenericException(Exception ex,String pss) {
 		try {
-		log.info("GENERIC_LOGGER_EX:" + pss);
-		log.error("GENERIC_LOGGER_EX:" + ex.getMessage());
-		log.error("GENERIC_LOGGER_EX:" + Arrays.toString(ex.getStackTrace()));
+			log.info("GENERIC_LOGGER_EX:" + pss);
+			log.error("GENERIC_LOGGER_EX:" + ex.getMessage());
+			log.error("GENERIC_LOGGER_EX:" + Arrays.toString(ex.getStackTrace()));
 		}catch(Exception exin) {
 			
 		}
