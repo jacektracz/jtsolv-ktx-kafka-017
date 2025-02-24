@@ -2,6 +2,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectTopicCreatorService;
+import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectTopicReadService;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
@@ -16,7 +17,8 @@ public class JTSolvKafkaDirectTopicController {
 
     private static Logger logger = LoggerFactory.getLogger(JTSolvKafkaDirectTopicController.class.getName());
 
-    private final JTSolvKafkaDirectTopicCreatorService topicsManager;
+    private final JTSolvKafkaDirectTopicCreatorService topicsCreateManager;
+    private final JTSolvKafkaDirectTopicReadService topicsReadManager;
 
     private String getCn() {
         return JTSolvKafkaDirectTopicController.class.getName();
@@ -24,8 +26,10 @@ public class JTSolvKafkaDirectTopicController {
 
     @Autowired
     public JTSolvKafkaDirectTopicController(
-            JTSolvKafkaDirectTopicCreatorService messageConsumer){
-        this.topicsManager = messageConsumer;
+            JTSolvKafkaDirectTopicCreatorService topicsCreateManager,
+            JTSolvKafkaDirectTopicReadService topicsReadManager){
+        this.topicsCreateManager = topicsCreateManager;
+        this.topicsReadManager = topicsReadManager;
     }
 
     @PostMapping("/api/jtsolv-kafka/create-topic-by-post")
@@ -39,7 +43,7 @@ public class JTSolvKafkaDirectTopicController {
             JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
-            JTSolvKafkaResultData result = topicsManager.createTopic(dt);
+            JTSolvKafkaResultData result = topicsCreateManager.createTopic(dt);
             dbg(mtd + "end");
             return result;
         } catch (Exception e) {
@@ -62,7 +66,28 @@ public class JTSolvKafkaDirectTopicController {
             JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
-            JTSolvKafkaResultData result = topicsManager.createTopic(dt);
+            JTSolvKafkaResultData result = topicsCreateManager.createTopic(dt);
+            dbg(mtd + "end");
+            return result;
+        } catch (Exception e) {
+            String msg = err(mtd + "exception", e);
+            JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
+            resultErr.setResultCode("500");
+            resultErr.setResultErrorMessage(msg);
+            return resultErr;
+        }
+    }
+
+    @GetMapping("/api/jtsolv-kafka/read-topic-list-by-get")
+    public JTSolvKafkaResultData readKafkaTopicListByGet(
+            @RequestParam("brokerId") String brokerId) {
+        String mtd = getCn() + ":readKafkaTopicListByGet:";
+        dbg(mtd + "start");
+
+        try{
+            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            dt.setBrokerId(brokerId);
+            JTSolvKafkaResultData result = topicsReadManager.readTopics(dt);
             dbg(mtd + "end");
             return result;
         } catch (Exception e) {
