@@ -8,13 +8,16 @@ import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Component
 public class JTSolvKafkaDirectConsumerService {
@@ -69,6 +72,7 @@ public class JTSolvKafkaDirectConsumerService {
         properties.put("auto.offset.reset", "earliest"); // Start reading from the earliest message
 
         // Create the Kafka consumer
+
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
 
         // Subscribe to the topic
@@ -78,7 +82,16 @@ public class JTSolvKafkaDirectConsumerService {
         dbg(mtd + "Subscribe to value serializer: " + stringSerializer );
         dbg(mtd + "Subscribe to key serializer: " + stringSerializer );
 
-        consumer.subscribe(Collections.singletonList(topic));
+        List<TopicPartition> assignments = consumer
+                .partitionsFor(topic)
+                .stream()
+                .map(partition -> new TopicPartition(topic, partition.partition()))
+                .collect(Collectors.toList());
+
+        consumer.assign(assignments);
+        consumer.seekToBeginning(consumer.assignment());
+
+        //consumer.subscribe(Collections.singletonList(topic));
 
         // Poll messages from the topic
         int iterationIdx = 0;
