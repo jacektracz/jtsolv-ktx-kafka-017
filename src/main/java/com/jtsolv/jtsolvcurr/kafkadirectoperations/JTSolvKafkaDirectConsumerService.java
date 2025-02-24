@@ -5,6 +5,8 @@ import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -79,12 +81,16 @@ public class JTSolvKafkaDirectConsumerService {
         consumer.subscribe(Collections.singletonList(topic));
 
         // Poll messages from the topic
-        int ii = 0;
+        int iterationIdx = 0;
+        int messagesNumber = 0;
         while (true) {
             long milliseconds = Long.valueOf(dt.getThreadKafkaPoolingTime());
-            dbg(mtd + "Consume in loop number:" + ii);
+            dbg(mtd + "Consume in loop number:" + iterationIdx);
             dbg(mtd + "Consumer pool start wait for milliseconds:" + milliseconds);
-            consumer.poll(milliseconds).forEach(record -> {
+            ConsumerRecords<String,String> records = consumer.poll(milliseconds);
+
+            for (ConsumerRecord<String,String> record : records){
+                messagesNumber++;
                 JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
                 dbg(mtd + "Consumed message: " + record.value() );
                 messageDt.setKafkaMessageValue(record.value());
@@ -101,12 +107,17 @@ public class JTSolvKafkaDirectConsumerService {
                 dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
                 messageDt.setKafkaMessageMemberId(String.valueOf(consumer.groupMetadata().generationId()));
                 resultData.getResultMessages().add(messageDt);
-            });
-            ii++;
+                if (messagesNumber > Long.valueOf(numberOfMessages)){
+                    break;
+                }
+            }
+
+            iterationIdx++;
             dbg(mtd + "Sleep start:");
-            if (ii > Long.valueOf(numberOfMessages)){
+            if (iterationIdx > Long.valueOf(numberOfMessages)){
                 break;
             }
+
             try {
                 Thread.sleep(Long.valueOf(dt.getThreadSleepPooling()));
             } catch (Exception e) {
