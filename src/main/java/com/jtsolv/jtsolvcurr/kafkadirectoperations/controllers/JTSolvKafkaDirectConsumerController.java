@@ -48,9 +48,10 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
             dt.setThreadKafkaPoolingTime(pooltime);
-            JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
+            JTSolvKafkaResultData resultOk = messageConsumer.consumeMessage(dt);
+            resultOk.setResultCode("200");
             dbg(mtd + "end");
-            return result;
+            return resultOk;
         } catch (Exception e) {
             String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();

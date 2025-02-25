@@ -26,7 +26,7 @@ public class JTSolvKafkaDirectTopicReadService {
     }
 
     public JTSolvKafkaResultData readTopics(JTSolvKafkaRequestData dt) {
-        String mtd = getCn() + ":createTopic:";
+        String mtd = getCn() + ":readTopics:";
         dbg(mtd + "start");
         JTSolvKafkaResultData resultOk = new JTSolvKafkaResultData();
         Properties props = new Properties();
@@ -43,13 +43,14 @@ public class JTSolvKafkaDirectTopicReadService {
                     .map(t -> new JTSolvKafkaTopicData(t))
                     .collect(Collectors.toList());
             resultOk.setResultTopics(topicsData);
-            dbg(mtd + "endMethod");
+            dbg(mtd + "end-method");
+            resultOk.setResultCode("200");
             return resultOk;
         } catch (Exception e) {
             JTSolvKafkaResultData resultError = new JTSolvKafkaResultData();
-            dbg(mtd + "Error creating topic: " + e.getMessage());
+            dbg(mtd + "Error read topics: " + e.getMessage());
             resultError.setResultErrorMessage(
-                    err(mtd + "Error creating topic: ", e));
+                    err(mtd + "Error read topic: ", e));
             resultError.setResultCode("500");
             return resultError;
         }

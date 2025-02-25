@@ -87,9 +87,10 @@ public class JTSolvKafkaDirectTopicController {
         try{
             JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
             dt.setKafkaServer(server);
-            JTSolvKafkaResultData result = topicsReadManager.readTopics(dt);
+            JTSolvKafkaResultData resultOk = topicsReadManager.readTopics(dt);
+            resultOk.setResultCode("500");
             dbg(mtd + "end");
-            return result;
+            return resultOk;
         } catch (Exception e) {
             String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();

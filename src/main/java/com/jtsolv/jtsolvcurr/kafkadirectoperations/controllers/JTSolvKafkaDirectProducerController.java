@@ -72,10 +72,11 @@ public class JTSolvKafkaDirectProducerController {
             dt.setTopic(topic);
             dt.setMessageValue(message);
             dt.setNumbers(numbers);
-            JTSolvKafkaResultData result = messageProducer.produceMessage(dt);
-            result.setResultCode("200");
+            JTSolvKafkaResultData resultOk = messageProducer.produceMessage(dt);
+            resultOk.setResultCode("200");
+
             dbg(mtd + "end");
-            return result;
+            return resultOk;
         } catch (Exception e) {
             String msg = err(mtd + "exception", e);
             JTSolvKafkaResultData resultErr = new JTSolvKafkaResultData();
