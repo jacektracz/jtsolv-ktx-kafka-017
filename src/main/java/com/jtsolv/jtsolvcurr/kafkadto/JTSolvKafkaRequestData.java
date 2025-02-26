@@ -6,7 +6,7 @@ public class JTSolvKafkaRequestData {
     private String topic;
     private String messageValue;
     private String brokerId;
-    private String numbers;
+    private String messageNumbers;
     private String numberOfPoolIterations="10";
     private String startoffset;
     private String endoffset;
@@ -14,6 +14,16 @@ public class JTSolvKafkaRequestData {
     private String threadKafkaPoolingTime = "10000";
     private String keyPrefix= "";
     private String kafkaServer = "192.168.55.103:9092";
+
+    public JTSolvKafkaMessageBodyData getMessageBody() {
+        return messageBody;
+    }
+
+    public void setMessageBody(JTSolvKafkaMessageBodyData messageBody) {
+        this.messageBody = messageBody;
+    }
+
+    private JTSolvKafkaMessageBodyData messageBody = new JTSolvKafkaMessageBodyData("");
 
     public String getKafkaServer() {
         return kafkaServer;
@@ -67,12 +77,12 @@ public class JTSolvKafkaRequestData {
         this.brokerId = brokerId;
     }
 
-    public String getNumbers() {
-        return numbers;
+    public String getMessageNumbers() {
+        return messageNumbers;
     }
 
-    public void setNumbers(String numbers) {
-        this.numbers = numbers;
+    public void setMessageNumbers(String messageNumbers) {
+        this.messageNumbers = messageNumbers;
     }
 
     public String getStartoffset() {

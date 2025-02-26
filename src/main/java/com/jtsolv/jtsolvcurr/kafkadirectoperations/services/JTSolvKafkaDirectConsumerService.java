@@ -54,7 +54,7 @@ public class JTSolvKafkaDirectConsumerService {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
 
-        Long numberOfMessages = Long.valueOf(dt.getNumbers());
+        Long numberOfMessages = Long.valueOf(dt.getMessageNumbers());
         JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
 
         Properties properties = new Properties();
@@ -128,7 +128,7 @@ public class JTSolvKafkaDirectConsumerService {
         dbg(mtd + "Subscribe-to-topic: " + dt.getTopic() );
         dbg(mtd + "Subscribe-to-groupId: " + dt.getGroupId() );
         dbg(mtd + "Subscribe-to-servers: " + dt.getBrokerId() );
-        dbg(mtd + "Subscribe-to-number-of-messages: " + dt.getNumbers() );
+        dbg(mtd + "Subscribe-to-number-of-messages: " + dt.getMessageNumbers() );
         dbg(mtd + "Subscribe-to-value-serializer: " + stringSerializer );
         dbg(mtd + "Subscribe-to-key-serializer: " + stringSerializer );
         dbg(mtd + "Subscribe-to-pooling-time: " + dt.getThreadKafkaPoolingTime());

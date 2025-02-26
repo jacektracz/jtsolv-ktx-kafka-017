@@ -56,7 +56,7 @@ public class JTSolvKafkaDirectProducerService {
         JTSolvKafkaResultData result = new JTSolvKafkaResultData();
         JTSolvKafkaTopicData topic = new JTSolvKafkaTopicData(dt.getTopic());
         String keyPrefix = dt.getKeyPrefix();
-        long numberOfSend = Long.valueOf(dt.getNumbers());
+        long numberOfSend = Long.valueOf(dt.getMessageNumbers());
         // Set Kafka producer properties
 
         String server = dt.getKafkaServer();
@@ -80,8 +80,7 @@ public class JTSolvKafkaDirectProducerService {
                 try {
                     JTSolvKafkaMessageKeyData key = new JTSolvKafkaMessageKeyData(
                             initialKey + "-" + ii);
-                    JTSolvKafkaMessageBodyData value = new JTSolvKafkaMessageBodyData(
-                            dt.getMessageValue()) ;
+                    JTSolvKafkaMessageBodyData value = dt.getMessageBody();
                     sendValue(
                             result,
                             producer,

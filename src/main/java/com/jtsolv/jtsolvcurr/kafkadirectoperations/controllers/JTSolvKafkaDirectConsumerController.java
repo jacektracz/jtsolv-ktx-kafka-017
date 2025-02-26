@@ -46,7 +46,7 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setGroupId(groupId);
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
-            dt.setNumbers(numbers);
+            dt.setMessageNumbers(numbers);
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
             dt.setThreadKafkaPoolingTime(pooltime);
@@ -85,7 +85,7 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setGroupId(groupId);
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
-            dt.setNumbers(numbers);
+            dt.setMessageNumbers(numbers);
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
             dt.setThreadKafkaPoolingTime(pooltime);

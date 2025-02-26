@@ -3,6 +3,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectProducerService;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageBodyData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
@@ -30,10 +31,10 @@ public class JTSolvKafkaDirectProducerController {
 
     @PostMapping("/api/jtsolv-kafka/send-message-direct-by-post")
     public JTSolvKafkaResultData sendMessageByPost(
+            @RequestBody JTSolvKafkaMessageBodyData dtBody,
             @RequestParam("server") String server,
             @RequestParam("topic") String topic,
-            @RequestParam("message") String message,
-            @RequestParam("numbers") String numbers) {
+            @RequestParam("messagenumbers") String messagenumbers) {
 
         String mtd = getCn() + ":sendMessageByPost:";
         dbg(mtd + "start");
@@ -42,8 +43,9 @@ public class JTSolvKafkaDirectProducerController {
             dt.setKafkaServer(server);
             dt.setBrokerId(server);
             dt.setTopic(topic);
-            dt.setMessageValue(message);
-            dt.setNumbers(numbers);
+            dt.setMessageValue(dtBody.getMessageBodyValue());
+            dt.setMessageNumbers(messagenumbers);
+            dt.setMessageBody(dtBody);
             JTSolvKafkaResultData result = messageProducer.produceMessage(dt);
             result.setResultCode("200");
             dbg(mtd + "end");
@@ -59,10 +61,11 @@ public class JTSolvKafkaDirectProducerController {
 
     @GetMapping("/api/jtsolv-kafka/send-message-direct-by-get")
     public JTSolvKafkaResultData sendMessageByGet(
+
             @RequestParam("server") String server,
             @RequestParam("topic") String topic,
-            @RequestParam("message") String message,
-            @RequestParam("numbers") String numbers) {
+            @RequestParam("messagevalue") String messagevalue,
+            @RequestParam("messagenumbers") String messagenumbers) {
         String mtd = getCn() + ":sendMessageByGet:";
         dbg(mtd + "start");
         try{
@@ -70,8 +73,9 @@ public class JTSolvKafkaDirectProducerController {
             dt.setKafkaServer(server);
             dt.setBrokerId(server);
             dt.setTopic(topic);
-            dt.setMessageValue(message);
-            dt.setNumbers(numbers);
+            dt.setMessageValue(messagevalue);
+            dt.setMessageNumbers(messagenumbers);
+            dt.setMessageBody(new JTSolvKafkaMessageBodyData(messagevalue));
             JTSolvKafkaResultData resultOk = messageProducer.produceMessage(dt);
             resultOk.setResultCode("200");
 
