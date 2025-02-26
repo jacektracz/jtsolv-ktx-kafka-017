@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectConsumerService;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class JTSolvKafkaDirectConsumerController {
         dbg(mtd + "start");
 
         try{
-            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt =  new JTSolvKafkaRequestReadMessagesData();
             dt.setGroupId(groupId);
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
@@ -81,7 +81,7 @@ public class JTSolvKafkaDirectConsumerController {
         dbg(mtd + "start");
 
         try{
-            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt =  new JTSolvKafkaRequestReadMessagesData();
             dt.setGroupId(groupId);
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);

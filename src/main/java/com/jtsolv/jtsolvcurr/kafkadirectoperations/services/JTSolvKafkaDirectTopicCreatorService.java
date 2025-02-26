@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +24,7 @@ public class JTSolvKafkaDirectTopicCreatorService {
     }
 
     public JTSolvKafkaResultData createTopic(
-            JTSolvKafkaRequestData dt
+            JTSolvKafkaRequestReadMessagesData dt
             ) {
         String mtd = getCn() + ":createTopic:";
         dbg(mtd + "start");

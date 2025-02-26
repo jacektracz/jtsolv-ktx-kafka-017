@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaTopicData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
@@ -25,7 +25,7 @@ public class JTSolvKafkaDirectTopicReadService {
         return JTSolvKafkaDirectTopicReadService.class.getName();
     }
 
-    public JTSolvKafkaResultData readTopics(JTSolvKafkaRequestData dt) {
+    public JTSolvKafkaResultData readTopics(JTSolvKafkaRequestReadMessagesData dt) {
         String mtd = getCn() + ":readTopics:";
         dbg(mtd + "start");
         JTSolvKafkaResultData resultOk = new JTSolvKafkaResultData();

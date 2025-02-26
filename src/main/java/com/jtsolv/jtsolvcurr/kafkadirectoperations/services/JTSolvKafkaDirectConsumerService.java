@@ -2,7 +2,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.services;
 
 // KafkaConsumerExample.java
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageData;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -40,7 +40,7 @@ public class JTSolvKafkaDirectConsumerService {
     }
 
     public JTSolvKafkaResultData consumeMessage(
-            JTSolvKafkaRequestData dt) {
+            JTSolvKafkaRequestReadMessagesData dt) {
         String mtd = getCn() + ":consumeMessage:";
         dbg(mtd + "start");
         JTSolvKafkaResultData resultDt = consumeMessageInternal(dt);
@@ -50,7 +50,7 @@ public class JTSolvKafkaDirectConsumerService {
     }
 
     public static JTSolvKafkaResultData consumeMessageInternal(
-            JTSolvKafkaRequestData dt) {
+            JTSolvKafkaRequestReadMessagesData dt) {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
 
@@ -110,7 +110,7 @@ public class JTSolvKafkaDirectConsumerService {
         return resultData;
     }
 
-    private static void fillProperties(JTSolvKafkaRequestData dt,Properties properties ) {
+    private static void fillProperties(JTSolvKafkaRequestReadMessagesData dt, Properties properties ) {
 
         String stringSerializer = StringDeserializer.class.getName();
         properties.put("bootstrap.servers", dt.getBrokerId()); // Kafka server
@@ -121,7 +121,7 @@ public class JTSolvKafkaDirectConsumerService {
 
     }
 
-    private static void logPoolingInfo(JTSolvKafkaRequestData dt){
+    private static void logPoolingInfo(JTSolvKafkaRequestReadMessagesData dt){
 
         String mtd = getCn() + ":logPoolingInfo:";
         String stringSerializer = StringDeserializer.class.getName();

@@ -3,7 +3,7 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectTopicCreatorService;
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectTopicReadService;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class JTSolvKafkaDirectTopicController {
         dbg(mtd + "start");
         try{
 
-            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt =  new JTSolvKafkaRequestReadMessagesData();
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
             JTSolvKafkaResultData result = topicsCreateManager.createTopic(dt);
@@ -63,7 +63,7 @@ public class JTSolvKafkaDirectTopicController {
         dbg(mtd + "start");
 
         try{
-            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt =  new JTSolvKafkaRequestReadMessagesData();
             dt.setTopic(topic);
             dt.setBrokerId(brokerId);
             JTSolvKafkaResultData result = topicsCreateManager.createTopic(dt);
@@ -85,7 +85,7 @@ public class JTSolvKafkaDirectTopicController {
         dbg(mtd + "start");
 
         try{
-            JTSolvKafkaRequestData dt =  new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt =  new JTSolvKafkaRequestReadMessagesData();
             dt.setKafkaServer(server);
             JTSolvKafkaResultData resultOk = topicsReadManager.readTopics(dt);
             resultOk.setResultCode("500");

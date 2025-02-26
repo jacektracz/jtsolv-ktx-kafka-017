@@ -1,6 +1,6 @@
 package com.jtsolv.jtsolvcurr.kafkadto;
 
-public class JTSolvKafkaRequestData {
+public class JTSolvKafkaRequestReadMessagesData {
 
     private String groupId;
     private String topic;

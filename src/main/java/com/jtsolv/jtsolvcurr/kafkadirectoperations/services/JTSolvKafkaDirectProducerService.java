@@ -28,7 +28,7 @@ public class JTSolvKafkaDirectProducerService {
     }
 
     public JTSolvKafkaResultData produceMessage(
-            JTSolvKafkaRequestData dt
+            JTSolvKafkaRequestWriteMessagesData dt
             ) {
 
         String mtd = getCn() + ":produceMessage:";
@@ -49,17 +49,16 @@ public class JTSolvKafkaDirectProducerService {
     }
 
     public static JTSolvKafkaResultData produceMessagesInternal(
-            JTSolvKafkaRequestData dt
-            ) {
+            JTSolvKafkaRequestWriteMessagesData dt) {
         String mtd = getCn() + ":produceMessagesInternal:";
         dbg(mtd + "start");
         JTSolvKafkaResultData result = new JTSolvKafkaResultData();
         JTSolvKafkaTopicData topic = new JTSolvKafkaTopicData(dt.getTopic());
         String keyPrefix = dt.getKeyPrefix();
-        long numberOfSend = Long.valueOf(dt.getMessageNumbers());
+        long numberOfSend = Long.valueOf(dt.getMessageWriteNumbers());
         // Set Kafka producer properties
 
-        String server = dt.getKafkaServer();
+        String server = dt.getBrokerId();
         String valueSerializer = StringSerializer.class.getName();
         String keySerializer = StringSerializer.class.getName();
         dbg(mtd + "server:" + server);

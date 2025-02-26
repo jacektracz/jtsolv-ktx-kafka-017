@@ -4,7 +4,8 @@ package com.jtsolv.jtsolvcurr.kafkadirectoperations.controllers;
 
 import com.jtsolv.jtsolvcurr.kafkadirectoperations.services.JTSolvKafkaDirectProducerService;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaMessageBodyData;
-import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestReadMessagesData;
+import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaRequestWriteMessagesData;
 import com.jtsolv.jtsolvcurr.kafkadto.JTSolvKafkaResultData;
 import com.jtsolv.jtsolvcurr.logging.JTSolvStaticExtenderLogger;
 import org.slf4j.Logger;
@@ -31,22 +32,12 @@ public class JTSolvKafkaDirectProducerController {
 
     @PostMapping("/api/jtsolv-kafka/send-message-direct-by-post")
     public JTSolvKafkaResultData sendMessageByPost(
-            @RequestBody JTSolvKafkaMessageBodyData dtBody,
-            @RequestParam("server") String server,
-            @RequestParam("topic") String topic,
-            @RequestParam("messagenumbers") String messagenumbers) {
+            @RequestBody JTSolvKafkaRequestWriteMessagesData dtBody) {
 
         String mtd = getCn() + ":sendMessageByPost:";
         dbg(mtd + "start");
         try{
-            JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
-            dt.setKafkaServer(server);
-            dt.setBrokerId(server);
-            dt.setTopic(topic);
-            dt.setMessageValue(dtBody.getMessageBodyValue());
-            dt.setMessageNumbers(messagenumbers);
-            dt.setMessageBody(dtBody);
-            JTSolvKafkaResultData result = messageProducer.produceMessage(dt);
+            JTSolvKafkaResultData result = messageProducer.produceMessage(dtBody);
             result.setResultCode("200");
             dbg(mtd + "end");
             return result;
@@ -69,7 +60,7 @@ public class JTSolvKafkaDirectProducerController {
         String mtd = getCn() + ":sendMessageByGet:";
         dbg(mtd + "start");
         try{
-            JTSolvKafkaRequestData dt  = new JTSolvKafkaRequestData();
+            JTSolvKafkaRequestReadMessagesData dt  = new JTSolvKafkaRequestReadMessagesData();
             dt.setKafkaServer(server);
             dt.setBrokerId(server);
             dt.setTopic(topic);
