@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built JAR file
-COPY build/libs/jtsolv-spring-kafka-gamedices-consumer-0.0.39-SNAPSHOT.jar jtsolv-spring-kafka-gamedices-consumer-0.0.39.jar
+COPY build/libs/jtsolv-spring-kafka-gamedices-consumer-0.0.40-SNAPSHOT.jar jtsolv-spring-kafka-gamedices-consumer-0.0.40.jar
 
 # Expose ports (8080 for REST API)
 EXPOSE 8080
@@ -14,4 +14,4 @@ EXPOSE 8080
 ENV KAFKA_BROKER=kafka-service:9092
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "jtsolv-spring-kafka-gamedices-consumer-0.0.39.jar"]
+ENTRYPOINT ["java", "-jar", "jtsolv-spring-kafka-gamedices-consumer-0.0.40.jar"]
