@@ -54,37 +54,17 @@ public class JTSolvKafkaDirectConsumerService {
         String mtd = getCn() + ":consumeMessageInternal:";
         dbg(mtd + "start");
 
-        String groupId = dt.getGroupId();
-        String topic = dt.getTopic();
-        String brokerId = dt.getBrokerId();
         Long numberOfMessages = Long.valueOf(dt.getNumbers());
-        String startoffest = dt.getStartoffset();
-        String endOffset = dt.getEndoffset();
         JTSolvKafkaResultData resultData = new JTSolvKafkaResultData();
-        // Set Kafka consumer properties
+
         Properties properties = new Properties();
-        String stringSerializer = StringDeserializer.class.getName();
-        properties.put("bootstrap.servers", brokerId); // Kafka server
-        properties.put("group.id", groupId); // Consumer group
-        properties.put("key.deserializer", stringSerializer);
-        properties.put("value.deserializer", stringSerializer);
-        properties.put("auto.offset.reset", "earliest"); // Start reading from the earliest message
-
-        // Create the Kafka consumer
-
+        fillProperties(dt, properties);
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
 
-        // Subscribe to the topic
-        dbg(mtd + "Subscribe to topic: " + topic );
-        dbg(mtd + "Subscribe to groupId: " + groupId );
-        dbg(mtd + "Subscribe to servers: " + brokerId );
-        dbg(mtd + "Subscribe to value serializer: " + stringSerializer );
-        dbg(mtd + "Subscribe to key serializer: " + stringSerializer );
-
         List<TopicPartition> assignments = consumer
-                .partitionsFor(topic)
+                .partitionsFor(dt.getTopic())
                 .stream()
-                .map(partition -> new TopicPartition(topic, partition.partition()))
+                .map(partition -> new TopicPartition(dt.getTopic(), partition.partition()))
                 .collect(Collectors.toList());
 
         consumer.assign(assignments);
@@ -92,7 +72,8 @@ public class JTSolvKafkaDirectConsumerService {
 
         //consumer.subscribe(Collections.singletonList(topic));
 
-        // Poll messages from the topic
+        logPoolingInfo(dt);
+
         int iterationIdx = 0;
         int messagesNumber = 0;
         while (true) {
@@ -103,50 +84,20 @@ public class JTSolvKafkaDirectConsumerService {
 
             for (ConsumerRecord<String,String> record : records){
                 messagesNumber++;
-                JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
-                dbg(mtd + "Consumed message: " + record.value() );
-
-                messageDt.setKafkaMessageValue(record.value());
-                dbg(mtd + "Consumed from partition: " + record.partition());
-
-                messageDt.setKafkaMessageTopic(record.topic());
-                dbg(mtd + "Consumed from topic: " + record.topic());
-
-                messageDt.setKafkaMessagePartitionId(String.valueOf(record.partition()));
-                dbg(mtd + "Consumed offset: " + record.offset());
-
-                messageDt.setKafkaMessageOffsetId(String.valueOf(record.offset()));
-                dbg(mtd + "Consumed key: " + record.key());
-
-                messageDt.setKafkaMessageKey(String.valueOf(record.key()));
-                dbg(mtd + "Consumed groupId: " + consumer.groupMetadata().groupId());
-
-                messageDt.setKafkaMessageGroupId(
-                        String.valueOf(consumer.groupMetadata().groupId()));
-                dbg(mtd + "Consumed memberId: " + consumer.groupMetadata().memberId());
-
-                messageDt.setKafkaMessageMemberId(
-                        String.valueOf(consumer.groupMetadata().memberId()));
-                dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
-
-                messageDt.setKafkaMessageMemberId(
-                        String.valueOf(consumer.groupMetadata().generationId()));
-
-                messageDt.setKafkaMessageResultCode("200");
-                resultData.getResultMessages().add(messageDt);
-
+                fillMessageInfo(consumer,resultData, record);
                 if (messagesNumber > numberOfMessages){
                     break;
                 }
             }
 
             iterationIdx++;
-            dbg(mtd + "Sleep start:");
+
             if (iterationIdx > Long.valueOf(dt.getNumberOfPoolIterations())){
                 break;
             }
 
             try {
+                dbg(mtd + "Sleep start:");
                 Thread.sleep(Long.valueOf(dt.getThreadSleepBetweenPoolingIterations()));
             } catch (Exception e) {
                 JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
@@ -159,6 +110,72 @@ public class JTSolvKafkaDirectConsumerService {
         return resultData;
     }
 
+    private static void fillProperties(JTSolvKafkaRequestData dt,Properties properties ) {
+
+        String stringSerializer = StringDeserializer.class.getName();
+        properties.put("bootstrap.servers", dt.getBrokerId()); // Kafka server
+        properties.put("group.id", dt.getGroupId()); // Consumer group
+        properties.put("key.deserializer", stringSerializer);
+        properties.put("value.deserializer", stringSerializer);
+        properties.put("auto.offset.reset", "earliest"); // Start reading from the earliest message
+
+    }
+
+    private static void logPoolingInfo(JTSolvKafkaRequestData dt){
+
+        String mtd = getCn() + ":logPoolingInfo:";
+        String stringSerializer = StringDeserializer.class.getName();
+        dbg(mtd + "Subscribe-to-topic: " + dt.getTopic() );
+        dbg(mtd + "Subscribe-to-groupId: " + dt.getGroupId() );
+        dbg(mtd + "Subscribe-to-servers: " + dt.getBrokerId() );
+        dbg(mtd + "Subscribe-to-number-of-messages: " + dt.getNumbers() );
+        dbg(mtd + "Subscribe-to-value-serializer: " + stringSerializer );
+        dbg(mtd + "Subscribe-to-key-serializer: " + stringSerializer );
+        dbg(mtd + "Subscribe-to-pooling-time: " + dt.getThreadKafkaPoolingTime());
+        dbg(mtd + "Subscribe-to-number-of-iterations: " + dt.getNumberOfPoolIterations());
+        dbg(mtd + "Subscribe-to-number-of-iterations: " + dt.getNumberOfPoolIterations());
+
+    }
+    private static void fillMessageInfo(
+            KafkaConsumer<String, String> consumer,
+            JTSolvKafkaResultData resultData,
+            ConsumerRecord<String,String> record) {
+        String mtd = getCn() + ":fillMessageInfo:";
+        dbg(mtd + "start");
+
+        JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
+        dbg(mtd + "Consumed message: " + record.value() );
+
+        messageDt.setKafkaMessageValue(record.value());
+        dbg(mtd + "Consumed from partition: " + record.partition());
+
+        messageDt.setKafkaMessageTopic(record.topic());
+        dbg(mtd + "Consumed from topic: " + record.topic());
+
+        messageDt.setKafkaMessagePartitionId(String.valueOf(record.partition()));
+        dbg(mtd + "Consumed offset: " + record.offset());
+
+        messageDt.setKafkaMessageOffsetId(String.valueOf(record.offset()));
+        dbg(mtd + "Consumed key: " + record.key());
+
+        messageDt.setKafkaMessageKey(String.valueOf(record.key()));
+        dbg(mtd + "Consumed groupId: " + consumer.groupMetadata().groupId());
+
+        messageDt.setKafkaMessageGroupId(
+                String.valueOf(consumer.groupMetadata().groupId()));
+        dbg(mtd + "Consumed memberId: " + consumer.groupMetadata().memberId());
+
+        messageDt.setKafkaMessageMemberId(
+                String.valueOf(consumer.groupMetadata().memberId()));
+        dbg(mtd + "Consumed generationId: " + consumer.groupMetadata().generationId());
+
+        messageDt.setKafkaMessageMemberId(
+                String.valueOf(consumer.groupMetadata().generationId()));
+
+        messageDt.setKafkaMessageResultCode("200");
+        resultData.getResultMessages().add(messageDt);
+
+    }
     private static String dbg (String txt){
         JTSolvStaticExtenderLogger.logGenericInfo(logger,txt);
         return txt;
