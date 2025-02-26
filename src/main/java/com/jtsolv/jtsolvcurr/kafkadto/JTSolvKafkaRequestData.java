@@ -1,7 +1,5 @@
 package com.jtsolv.jtsolvcurr.kafkadto;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 public class JTSolvKafkaRequestData {
 
     private String groupId;
@@ -12,7 +10,7 @@ public class JTSolvKafkaRequestData {
     private String numberOfPoolIterations="10";
     private String startoffset;
     private String endoffset;
-    private String threadSleepPooling = "1000";
+    private String threadSleepBetweenPoolingIterations = "1000";
     private String threadKafkaPoolingTime = "10000";
     private String keyPrefix= "";
     private String kafkaServer = "192.168.55.103:9092";
@@ -36,12 +34,12 @@ public class JTSolvKafkaRequestData {
 
 
 
-    public String getThreadSleepPooling() {
-        return threadSleepPooling;
+    public String getThreadSleepBetweenPoolingIterations() {
+        return threadSleepBetweenPoolingIterations;
     }
 
-    public void setThreadSleepPooling(String threadSleepPooling) {
-        this.threadSleepPooling = threadSleepPooling;
+    public void setThreadSleepBetweenPoolingIterations(String threadSleepBetweenPoolingIterations) {
+        this.threadSleepBetweenPoolingIterations = threadSleepBetweenPoolingIterations;
     }
 
 

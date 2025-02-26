@@ -35,7 +35,9 @@ public class JTSolvKafkaDirectConsumerController {
             @RequestParam("numbers") String numbers,
             @RequestParam("startoffset") String startoffset,
             @RequestParam("endoffset") String endoffset,
-            @RequestParam("pooltime") String pooltime) {
+            @RequestParam("pooltime") String pooltime,
+            @RequestParam("pooliterations") String pooliterations,
+            @RequestParam("threadsleep") String threadsleep) {
         String mtd = getCn() + ":readMessageByPost:";
         dbg(mtd + "start");
 
@@ -48,6 +50,8 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
             dt.setThreadKafkaPoolingTime(pooltime);
+            dt.setNumberOfPoolIterations(pooliterations);
+            dt.setThreadSleepBetweenPoolingIterations(threadsleep);
             JTSolvKafkaResultData resultOk = messageConsumer.consumeMessage(dt);
             resultOk.setResultCode("200");
             dbg(mtd + "end");
@@ -69,7 +73,9 @@ public class JTSolvKafkaDirectConsumerController {
             @RequestParam("numbers") String numbers,
             @RequestParam("startoffset") String startoffset,
             @RequestParam("endoffset") String endoffset,
-            @RequestParam("pooltime") String pooltime) {
+            @RequestParam("pooltime") String pooltime,
+            @RequestParam("pooliterations") String pooliterations,
+            @RequestParam("threadsleep") String threadsleep) {
 
         String mtd = getCn() + ":readMessageByGet:";
         dbg(mtd + "start");
@@ -83,6 +89,8 @@ public class JTSolvKafkaDirectConsumerController {
             dt.setStartoffset(startoffset);
             dt.setEndoffset(endoffset);
             dt.setThreadKafkaPoolingTime(pooltime);
+            dt.setNumberOfPoolIterations(pooliterations);
+            dt.setThreadSleepBetweenPoolingIterations(threadsleep);
             JTSolvKafkaResultData result = messageConsumer.consumeMessage(dt);
             dbg(mtd + "end");
             return result;

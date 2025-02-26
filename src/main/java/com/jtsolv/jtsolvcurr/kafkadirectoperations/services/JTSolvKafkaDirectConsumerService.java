@@ -147,7 +147,7 @@ public class JTSolvKafkaDirectConsumerService {
             }
 
             try {
-                Thread.sleep(Long.valueOf(dt.getThreadSleepPooling()));
+                Thread.sleep(Long.valueOf(dt.getThreadSleepBetweenPoolingIterations()));
             } catch (Exception e) {
                 JTSolvKafkaMessageData messageDt = new JTSolvKafkaMessageData();
                 messageDt.setKafkaMessageErrorMessage(err("error", e));

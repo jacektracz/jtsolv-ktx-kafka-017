@@ -12,7 +12,17 @@ public class JTSolvKafkaResultData {
     private String resultCode = "";
     private String resultSuccessMessage = "";
     private String resultErrorMessage = "";
+    private String poolThreadSleepTime = "1000";
     private List<JTSolvKafkaMessageData> resultMessages = new ArrayList<>();
+    private List<JTSolvKafkaTopicData> resultTopics = new ArrayList<>();
+
+    public JTSolvKafkaResultData() {
+        this.resultCode = "";
+        this.resultSuccessMessage = "";
+        this.resultErrorMessage = "";
+        this.resultMessages = new ArrayList<>();
+        this.resultTopics = new ArrayList<>();
+    }
 
     public List<JTSolvKafkaTopicData> getResultTopics() {
         return resultTopics;
@@ -22,7 +32,7 @@ public class JTSolvKafkaResultData {
         this.resultTopics = resultTopics;
     }
 
-    private List<JTSolvKafkaTopicData> resultTopics = new ArrayList<>();
+
 
     public String getPoolThreadSleepTime() {
         return poolThreadSleepTime;
@@ -32,13 +42,7 @@ public class JTSolvKafkaResultData {
         this.poolThreadSleepTime = poolThreadSleepTime;
     }
 
-    private String poolThreadSleepTime = "1000";
-    public JTSolvKafkaResultData() {
-        this.resultCode = "";
-        this.resultSuccessMessage = "";
-        this.resultErrorMessage = "";
-        this.resultMessages = new ArrayList<>();
-    }
+
 
     public List<JTSolvKafkaMessageData> getResultMessages() {
         return resultMessages;
