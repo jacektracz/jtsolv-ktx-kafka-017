@@ -7,8 +7,11 @@ public class JTSolvKafkaRequestWriteMessagesData {
     private String server;
     private String messageWriteNumbers = "1";
     private String keyPrefix = "jtsolv-";
-    private JTSolvKafkaMessageBodyData messageBody =  new JTSolvKafkaMessageBodyData("");
+    private JTSolvKafkaMessageBodyData messageBody;
 
+    public JTSolvKafkaRequestWriteMessagesData() {
+        this.messageBody = new JTSolvKafkaMessageBodyData();
+    }
     public String getServer() {
         return server;
     }

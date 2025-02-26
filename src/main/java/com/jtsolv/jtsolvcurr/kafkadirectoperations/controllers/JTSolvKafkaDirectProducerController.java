@@ -60,12 +60,11 @@ public class JTSolvKafkaDirectProducerController {
         String mtd = getCn() + ":sendMessageByGet:";
         dbg(mtd + "start");
         try{
-            JTSolvKafkaRequestReadMessagesData dt  = new JTSolvKafkaRequestReadMessagesData();
-            dt.setKafkaServer(server);
+            JTSolvKafkaRequestWriteMessagesData dt  = new JTSolvKafkaRequestWriteMessagesData();
+            dt.setServer(server);
             dt.setBrokerId(server);
             dt.setTopic(topic);
-            dt.setMessageValue(messagevalue);
-            dt.setMessageNumbers(messagenumbers);
+            dt.setMessageWriteNumbers(messagenumbers);
             dt.setMessageBody(new JTSolvKafkaMessageBodyData(messagevalue));
             JTSolvKafkaResultData resultOk = messageProducer.produceMessage(dt);
             resultOk.setResultCode("200");
